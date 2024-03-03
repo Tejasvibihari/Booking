@@ -16,7 +16,7 @@ export default function Hero() {
                 <div className="embla__slide">
                     <div className="relative">
                         <img
-                            src="./images/c1.jpeg"
+                            src="./img/c1.jpeg"
                             alt="Slide 1"
                             className="object-cover w-full h-screen"
                         />
