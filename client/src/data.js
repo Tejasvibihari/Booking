@@ -1,5 +1,5 @@
-export const EXAMPLES = [
-    {
+export const EXAMPLES = {
+    hotels: {
         hotel1: {
             title: "Hotel Card1",
             content: "This is a description of the card.",
@@ -219,4 +219,4 @@ export const EXAMPLES = [
             discount: "75"
         }
     },
-];
+};
