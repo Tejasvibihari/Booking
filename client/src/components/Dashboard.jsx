@@ -16,9 +16,14 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import InventoryRoundedIcon from '@mui/icons-material/InventoryRounded';
+import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
+import ChecklistRoundedIcon from '@mui/icons-material/ChecklistRounded';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Badge from '@mui/material/Badge';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const drawerWidth = 240;
 const admin = "Admin !";
@@ -30,6 +35,14 @@ const openedMixin = (theme) => ({
     }),
     overflowX: 'hidden',
 });
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        right: -3,
+        top: 13,
+        border: `2px solid ${theme.palette.background.paper}`,
+        padding: '0 4px',
+    },
+}));
 
 const closedMixin = (theme) => ({
     transition: theme.transitions.create('width', {
@@ -103,7 +116,7 @@ export default function Dashboard() {
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
-                <Toolbar>
+                <Toolbar className='bg-[#73E2A7]'>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -116,13 +129,20 @@ export default function Dashboard() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Mini variant drawer
+                    <Typography className='text-black' variant="h6" noWrap component="div">
+                        Dashboard
                     </Typography>
+                    <div className='flex ms-auto'>
+                        <IconButton aria-label="cart">
+                            <StyledBadge badgeContent={19} color="secondary">
+                                <ShoppingCartIcon />
+                            </StyledBadge>
+                        </IconButton>
+                    </div>
                 </Toolbar>
             </AppBar>
-            <Drawer variant="permanent" open={open}>
-                <DrawerHeader>
+            <Drawer className='bg-[#73E2A7]' variant="permanent" open={open}>
+                <DrawerHeader className='bg-[#73E2A7]'>
                     <div className="mx-auto">
                         <span className='text-black text-lg font-semibold'>Hello {admin}</span>
                     </div>
@@ -132,7 +152,7 @@ export default function Dashboard() {
                 </DrawerHeader>
                 <Divider />
                 {/* Dasboard Menu Icon with Name */}
-                <List>
+                <List className='bg-[#73E2A7]'>
                     <ListItem disablePadding sx={{ display: 'block' }}>
                         <ListItemButton
                             sx={{
@@ -154,7 +174,7 @@ export default function Dashboard() {
                         </ListItemButton>
 
                     </ListItem>
-                    <ListItem disablePadding sx={{ display: 'block' }}>
+                    <ListItem className='hover:bg-[#73E2A7]' disablePadding sx={{ display: 'block' }}>
                         <ListItemButton
                             sx={{
                                 minHeight: 48,
@@ -169,7 +189,7 @@ export default function Dashboard() {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <InboxIcon />
+                                <InventoryRoundedIcon />
                             </ListItemIcon>
                             <ListItemText primary="Booking" sx={{ opacity: open ? 1 : 0 }} />
                         </ListItemButton>
@@ -190,9 +210,9 @@ export default function Dashboard() {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <InboxIcon />
+                                <PeopleRoundedIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Dashboard" sx={{ opacity: open ? 1 : 0 }} />
+                            <ListItemText primary="User Detail" sx={{ opacity: open ? 1 : 0 }} />
                         </ListItemButton>
 
                     </ListItem>
@@ -211,11 +231,10 @@ export default function Dashboard() {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <InboxIcon />
+                                <ChecklistRoundedIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Dashboard" sx={{ opacity: open ? 1 : 0 }} />
+                            <ListItemText primary="Listing" sx={{ opacity: open ? 1 : 0 }} />
                         </ListItemButton>
-
                     </ListItem>
                     {/* {['Dashboard', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                         <ListItem key={text} disablePadding sx={{ display: 'block' }}>
@@ -241,29 +260,49 @@ export default function Dashboard() {
                     ))} */}
                 </List>
                 <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
+                <List className='bg-[#73E2A7]'>
+                    <ListItem disablePadding sx={{ display: 'block' }}>
+                        <ListItemButton
+                            sx={{
+                                minHeight: 48,
+                                justifyContent: open ? 'initial' : 'center',
+                                px: 2.5,
+                            }}
+                        >
+                            <ListItemIcon
                                 sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
+                                    minWidth: 0,
+                                    mr: open ? 3 : 'auto',
+                                    justifyContent: 'center',
                                 }}
                             >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
+                                <ManageAccountsIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Edit Profile" sx={{ opacity: open ? 1 : 0 }} />
+                        </ListItemButton>
+
+                    </ListItem>
+                    <ListItem disablePadding sx={{ display: 'block' }}>
+                        <ListItemButton
+                            sx={{
+                                minHeight: 48,
+                                justifyContent: open ? 'initial' : 'center',
+                                px: 2.5,
+                            }}
+                        >
+                            <ListItemIcon
+                                sx={{
+                                    minWidth: 0,
+                                    mr: open ? 3 : 'auto',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <AccountCircleIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Profile" sx={{ opacity: open ? 1 : 0 }} />
+                        </ListItemButton>
+
+                    </ListItem>
                 </List>
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
