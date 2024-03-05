@@ -24,8 +24,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ShortCard from './Dashboard/ShortCard';
-
+import DashboarContent from './Dashboard/DashboardContent';
+import Table from './Dashboard/Table';
 
 
 
@@ -40,6 +40,16 @@ const openedMixin = (theme) => ({
     }),
     overflowX: 'hidden',
 });
+
+//Badge In Right Upper Corner 
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        right: -3,
+        top: 13,
+        border: `2px solid ${theme.palette.background.paper}`,
+        padding: '0 4px',
+    },
+}));
 
 const closedMixin = (theme) => ({
     transition: theme.transitions.create('width', {
@@ -281,28 +291,8 @@ export default function MiniDrawer() {
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
-                <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
-                    <ShortCard
-                        title="Total Booking"
-                        value="45"
-                        link="#"
-                    />
-                    <ShortCard
-                        title="Total Booking"
-                        value="45"
-                        link="#"
-                    />
-                    <ShortCard
-                        title="Total Booking"
-                        value="45"
-                        link="#"
-                    />
-                    <ShortCard
-                        title="Total Booking"
-                        value="45"
-                        link="#"
-                    />
-                </div>
+                <DashboarContent />
+                <Table />
             </Box>
         </Box>
     );
