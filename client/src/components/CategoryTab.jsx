@@ -16,7 +16,7 @@ export default function CategoryTab() {
 
             <div className="flex flex-row justify-center mt-10 mx-auto">
                 <ButtonGroup variant="text" aria-label="Basic button group" className="border-[1px]">
-                    <Button onClick={() => { handleSelect(hotels) }} className={selected}><img src="./img/hotel.png" className='p-2' />
+                    <Button onClick={() => { handleSelect(hotels) }}><img src="./img/hotel.png" className='p-2' />
                         Hotel
                     </Button>
                     <Button onClick={() => { handleSelect(restaurants) }}><img src="./img/restaurant.png" className='p-2' />Restaurant</Button>
