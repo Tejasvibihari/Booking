@@ -33,17 +33,11 @@ function VerticalSlider({ rtl }) {
         speed: 2000,
         autoplaySpeed: 2000,
         cssEase: "linear",
-        slidesToShow: 4,
+        slidesToShow: 5,
         slidesToScroll: 1,
         rtl: rtl,
         nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />,
-        beforeChange: function (currentSlide, nextSlide) {
-            console.log("before change", currentSlide, nextSlide);
-        },
-        afterChange: function (currentSlide) {
-            console.log("after change", currentSlide);
-        }
+        prevArrow: <SamplePrevArrow />
     };
     return (
         <div className="slider-container">
@@ -71,7 +65,7 @@ function VerticalSlider({ rtl }) {
 export default VerticalSlider;
 
 VerticalSlider.propTypes = {
-    rtl: PropTypes.bool,
+    rtl: PropTypes.string,
     className: PropTypes.string,
     style: PropTypes.object,
     onClick: PropTypes.func,

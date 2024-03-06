@@ -1,8 +1,8 @@
-import VerticalSlider from "../ui/VerticalSlider";
-import SignUpForm from "../SignUpForm";
+import VerticalSlider from "../components/ui/VerticalSlider";
+import SignUpForm from "../components/SignUpForm";
 import Divider from "@mui/material/Divider";
 import { useState } from "react";
-import SignInForm from "../SignInForm";
+import SignInForm from "../components/SignInForm";
 
 
 export default function SignUp() {
@@ -14,7 +14,7 @@ export default function SignUp() {
 
     return (
         <>
-            <div className="bg-slate-200">
+            <div className="bg-slate-200 overflow-hidden h-screen">
                 <div className="grid grid-cols-4 gap-4 max-w-7xl mx-auto">
                     <div className="max-w-60 -rotate-12">
                         <VerticalSlider />
