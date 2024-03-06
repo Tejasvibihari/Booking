@@ -10,34 +10,48 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import axios from 'axios';
 
-// function Copyright(props) {
-//     return (
-//         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//             {'Copyright © '}
-//             <Link color="inherit" href="/">
-//                 Booking.com
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     );
-// }
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function SignInForm() {
-    const handleSubmit = (event) => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    console.log(error)
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        try {
+            setLoading(true)
+            const data = new FormData(event.currentTarget);
+            const formData = {
+                firstName: data.get('firstName'),
+                lastName: data.get('lastName'),
+                email: data.get('email'),
+                password: data.get('password'),
+            };
+            const res = await axios.post("/api/auth/signup", formData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            if (res.data.status === 200) {
+                setLoading(false);
+                console.log(res.data)
+                console.log(res.data.message)
+            } else {
+                console.log(res.data.message)
+                setLoading(false)
+            }
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+            console.log(error)
+        }
     };
-
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs" className='glass'>
@@ -87,7 +101,7 @@ export default function SignInForm() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            {loading ? "Please Wait..." : "Sign In"}
                         </Button>
                         {/* <Grid container justifyContent="flex-end">
                             <Grid item>

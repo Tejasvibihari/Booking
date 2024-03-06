@@ -20,14 +20,9 @@ import axios from 'axios';
 const defaultTheme = createTheme();
 
 export default function SignUpForm() {
-    // const [formData, setFormData] = useState({
-    //     firstName: "",
-    //     lastName: "",
-    //     email: "",
-    //     password: ""
-    // });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    console.log(error)
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -129,7 +124,7 @@ export default function SignUpForm() {
                                 />
                             </Grid>
                         </Grid>
-                        {loading ? "Please Wait..." : <Button
+                        <Button
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -137,8 +132,8 @@ export default function SignUpForm() {
                             onSubmit={handleSubmit}
 
                         >
-                            Sign Up
-                        </Button>}
+                            {loading ? "Please Wait..." : "Sign Up"}
+                        </Button>
                         {/* <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link href="" variant="body2">

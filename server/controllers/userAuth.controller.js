@@ -50,6 +50,25 @@ export const signUp = async (req, res) => {
 //     }
 // }
 
-export const signIn = passport.authenticate(('local'), (req, res) => {
-    res.json("Sign In Success")
-}) // Enable flash messages for failed authentication
+export const signIn = (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.status(400).json({ message: info.message });
+        }
+        req.logIn(user, function (err) {
+            if (err) {
+                return next(err);
+            }
+            // Send user data
+            return res.json({ user: user, message: "Sign In Successfully" });
+        });
+    })(req, res, next);
+};
+
+// export const signIn = passport.authenticate('local', {
+//     successRedirect: 'http://localhost:5173/',
+//     failureRedirect: 'http://localhost:5173/signin',
+// });
