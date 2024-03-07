@@ -21,7 +21,11 @@ const defaultTheme = createTheme();
 export default function SignInForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+
     console.log(error)
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -33,7 +37,7 @@ export default function SignInForm() {
                 email: data.get('email'),
                 password: data.get('password'),
             };
-            const res = await axios.post("/api/auth/signup", formData, {
+            const res = await axios.post("/api/auth/signin", formData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

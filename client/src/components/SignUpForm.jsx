@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const defaultTheme = createTheme();
@@ -23,7 +23,7 @@ export default function SignUpForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     console.log(error)
-
+    const navigate = useNavigate();
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -40,12 +40,12 @@ export default function SignUpForm() {
                     'Content-Type': 'application/json'
                 }
             })
-            if (res.data.status === 200) {
+            if (res.data == "User Created") {
                 setLoading(false);
-                console.log(res.data)
-                console.log(res.data.message)
+                console.log(res.data);
+                navigate('/');
             } else {
-                console.log(res.data.message)
+                console.log(res.data)
                 setLoading(false)
             }
         } catch (error) {
