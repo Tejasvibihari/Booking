@@ -10,8 +10,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+// Redux 
+import { useSelector, useDispatch } from 'react-redux'
+import { signInStart, signInSuccess, signInFailure } from '../app/user/userSlice'
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -19,41 +22,33 @@ import axios from 'axios';
 const defaultTheme = createTheme();
 
 export default function SignInForm() {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-
-
-    console.log(error)
-
+    const { error, loading } = useSelector((state) => state.user);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const hello = "hello";
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            setLoading(true)
+            console.log(hello)
+            dispatch(signInStart());
+            console.log(hello)
             const data = new FormData(event.currentTarget);
             const formData = {
-                firstName: data.get('firstName'),
-                lastName: data.get('lastName'),
                 email: data.get('email'),
-                password: data.get('password'),
+                password: data.get('password')
             };
-            const res = await axios.post("/api/auth/signin", formData, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            if (res.data.status === 200) {
-                setLoading(false);
-                console.log(res.data)
-                console.log(res.data.message)
+            const res = await axios.post("/api/auth/signin", formData)
+            if (res.status === 200) {
+                dispatch(signInSuccess(res.data.user));
+                console.log(res.data);
+                navigate("/");
             } else {
-                console.log(res.data.message)
-                setLoading(false)
+                dispatch(signInFailure(res.data.message));
+                console.log(res.data.message);
             }
         } catch (error) {
-            setError(error);
-            setLoading(false);
-            console.log(error)
+            dispatch(signInFailure(error.message));
         }
     };
     return (
@@ -74,7 +69,7 @@ export default function SignInForm() {
                     <Typography component="h1" variant="h5">
                         Sign In
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <Box component="form" noValidate sx={{ mt: 3 }} onSubmit={handleSubmit} >
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
