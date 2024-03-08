@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const adminSchema = mongoose.schema({
+const adminSchema = mongoose.Schema({
     email: {
         type: String,
         required: true,
