@@ -32,11 +32,11 @@ export const signUp = async (req, res) => {
 
 export const signIn = (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
+        if (!user) {
+            return res.status(401).json({ message: "Incorrect Email or Password" });
+        }
         if (err) {
             return next(err);
-        }
-        if (!user) {
-            return res.status(400).json({ message: info.message });
         }
         req.logIn(user, function (err) {
             if (err) {

@@ -12,9 +12,12 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 // Redux 
 import { useSelector, useDispatch } from 'react-redux'
-import { signInStart, signInSuccess, signInFailure } from '../app/user/userSlice'
+import { signInStart, signInSuccess, signInFailure, signInWarning } from '../app/user/userSlice'
+
+import Alert from '@mui/material/Alert';
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -22,97 +25,110 @@ import { signInStart, signInSuccess, signInFailure } from '../app/user/userSlice
 const defaultTheme = createTheme();
 
 export default function SignInForm() {
-    const { error, loading } = useSelector((state) => state.user);
+    // const signInError = useSelector(state => state.user.signInError);
+    const { error, loading, signInError, signInWarn } = useSelector((state) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const hello = "hello";
+    useEffect(() => {
+        console.log(signInError);
+    }, [signInError]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            console.log(hello)
             dispatch(signInStart());
-            console.log(hello)
             const data = new FormData(event.currentTarget);
             const formData = {
                 email: data.get('email'),
                 password: data.get('password')
             };
             const res = await axios.post("/api/auth/signin", formData)
-            if (res.status === 200) {
-                dispatch(signInSuccess(res.data.user));
+            console.log(res);
+            if (res.data.message === "Sign In Successfully") {
+                dispatch(signInSuccess(res));
                 console.log(res.data);
                 navigate("/");
             } else {
-                dispatch(signInFailure(res.data.message));
-                console.log(res.data.message);
+                dispatch(signInFailure(res.data.message))
             }
+
         } catch (error) {
+            if (error.response && error.response.status === 401) {
+                dispatch(signInWarning(error));
+            }
             dispatch(signInFailure(error.message));
+            console.log(error.message)
+
         }
     };
     return (
-        <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="xs" className='glass'>
-                <CssBaseline />
-                <Box
-                    sx={{
-                        marginTop: 0,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign In
-                    </Typography>
-                    <Box component="form" noValidate sx={{ mt: 3 }} onSubmit={handleSubmit} >
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="new-password"
-                                />
-                            </Grid>
+        <div>
+            <div className='mx-auto flex flex-col justify-center'>
+                {signInWarn && <Alert className='mb-7' severity="warning">{signInWarn}</Alert>}
+                {error && <Alert className='mb-7' severity="error">{error}</Alert>}
+            </div>
+            <ThemeProvider theme={defaultTheme}>
+                <Container component="main" maxWidth="xs" className='glass'>
+                    <CssBaseline />
+                    <Box
+                        sx={{
+                            marginTop: 0,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Sign In
+                        </Typography>
+                        <Box component="form" noValidate sx={{ mt: 3 }} onSubmit={handleSubmit} >
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="email"
+                                        label="Email Address"
+                                        name="email"
+                                        autoComplete="email"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        name="password"
+                                        label="Password"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="new-password"
+                                    />
+                                </Grid>
 
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                        >
-                            {loading ? "Please Wait..." : "Sign In"}
-                        </Button>
-                        {/* <Grid container justifyContent="flex-end">
+                            </Grid>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                            >
+                                {loading ? "Please Wait..." : "Sign In"}
+                            </Button>
+                            {/* <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link href="/signup" variant="body2">
                                     Do Not Have an Account? Sign Up
                                 </Link>
                             </Grid>
                         </Grid> */}
+                        </Box>
                     </Box>
-                </Box>
-                {/* <Copyright sx={{ mt: 5 }} /> */}
-            </Container>
-        </ThemeProvider>
+                    {/* <Copyright sx={{ mt: 5 }} /> */}
+                </Container>
+            </ThemeProvider>
+        </div>
     );
 }

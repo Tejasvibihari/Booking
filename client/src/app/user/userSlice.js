@@ -4,9 +4,9 @@ const initialState = {
     currentUser: null,
     error: null,
     loading: false,
-    signUpSuccess: "",
-    signUpWarn: "",
-    signUpError: "",
+    signInWarn: null,
+    signUpSuccess: null,
+    signUpWarn: null,
 };
 
 export const userSlice = createSlice({
@@ -25,6 +25,11 @@ export const userSlice = createSlice({
             state.error = action.payload;
             state.loading = false;
         },
+        signInWarning: (state, action) => {
+            state.error = action.payload;
+            state.loading = false;
+            state.signInWarn = "Incorrect Email or Password";
+        },
         signUpStart: (state) => {
             state.loading = true;
         },
@@ -36,18 +41,16 @@ export const userSlice = createSlice({
         signUpWarning: (state, action) => {
             state.error = action.payload;
             state.loading = false;
-            state.signUpError = action.payload;
             state.signUpWarn = "User Already Exists";
         },
         signUpFailure: (state, action) => {
             state.error = action.payload;
             state.loading = false;
-            state.signUpError = action.payload;
         },
     }
 })
 
 // Action creators are generated for each case reducer function
-export const { signInStart, signInSuccess, signInFailure, signUpStart, signUpSuccess, signUpWarning, signUpFailure } = userSlice.actions
+export const { signInStart, signInSuccess, signInWarning, signInFailure, signUpStart, signUpSuccess, signUpWarning, signUpFailure } = userSlice.actions
 
 export default userSlice.reducer

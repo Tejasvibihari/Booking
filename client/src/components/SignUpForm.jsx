@@ -24,7 +24,7 @@ import { signUpStart, signUpSuccess, signUpFailure, signUpWarning } from '../app
 const defaultTheme = createTheme();
 
 export default function SignUpForm() {
-    const { error, loading, signUpAlert, signUpError, signUpWarn } = useSelector((state) => state.user);
+    const { error, loading, signUpAlert, signUpWarn } = useSelector((state) => state.user);
 
     console.log(error)
 
@@ -65,7 +65,7 @@ export default function SignUpForm() {
         <div>
             <div className='mx-auto flex flex-col justify-center'>
                 {signUpAlert && <Alert className='mb-7' severity="success">{signUpAlert}</Alert>}
-                {signUpError && <Alert className='mb-7' severity="error">{signUpError}</Alert>}
+                {error && <Alert className='mb-7' severity="error">{error}</Alert>}
                 {signUpWarn && <Alert className='mb-7' severity="warning">{signUpWarn}</Alert>}
             </div>
             <ThemeProvider theme={defaultTheme}>
