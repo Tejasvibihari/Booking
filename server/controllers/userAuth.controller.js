@@ -1,14 +1,15 @@
 import bcrypt from 'bcrypt';
 import User from '../models/user.model.js';
 import passport from '../passport.js';
+import { sendSignUpEmail } from './signUp.email.js';
 
 
 
 const saltRounds = 10;
 
+
 export const signUp = async (req, res) => {
     const { email, password, firstName, lastName } = req.body;
-    // console.log(req.body)
     const userCheck = await User.findOne({ email: email })
     if (!userCheck) {
         try {
@@ -21,6 +22,9 @@ export const signUp = async (req, res) => {
             })
             await newUser.save()
             res.json("User Created")
+
+            await sendSignUpEmail(email, firstName, lastName);
+
         } catch (error) {
             res.json(error)
         }
