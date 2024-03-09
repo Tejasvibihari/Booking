@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Dashboard from './components/Dashboard';
 import SignIn from './pages/SignIn';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AdminSignIn from './pages/AdminSignIn';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/adminsignin" element={<AdminSignIn />} />
         </Routes>
       </BrowserRouter>
 
