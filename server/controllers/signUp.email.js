@@ -45,3 +45,34 @@ export const sendSignUpEmail = async (email, firstName, lastName) => {
         throw error;
     }
 };
+
+export const sendAdminSignUpEmail = async (companyName, firstName, lastName, email) => {
+    try {
+        const info = await transporter.sendMail({
+            from: '"Booking" <tejasvibihari2000@gmail.com>',
+            to: email,
+            subject: "Account created",
+            html: `
+                <div style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 4px;">
+        <header style="text-align: center; margin-bottom: 20px;">
+            <img src="https://leafinfotech.in/images/Leaf%20Logo.png" alt=${companyName} style="display: block; margin: 0 auto; width: 100px; height: auto;">
+            <h1>Welcome to ${companyName} Seller Portal!</h1>
+        </header>
+        <div style="line-height: 1.5;">
+            <p>Hi ${firstName},</p>
+            <p>Congratulations! Your seller account for ${companyName} has been successfully created on the ${companyName} platform.</p>
+            <p>Now you can manage your hotel listings, update room details, set rates and availability, and receive bookings directly through our platform.</p>
+            <p>To get started, log in to your seller account at: <a href="#">Dashboard</a></p>
+            <p>We're excited to have you join our growing network of hotels. If you have any questions or need assistance, please don't hesitate to contact our seller support team at tejasvibihari2000@gmail.com or 6205731150 .</p>
+            <p>Happy Selling!</p>
+            <p>The ${companyName} Team</p>
+        </div>
+    </div>
+            `
+        });
+        console.log(info);
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};

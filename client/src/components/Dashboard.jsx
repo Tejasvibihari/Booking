@@ -27,11 +27,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DashboarContent from './Dashboard/DashboardContent';
 import Table from './Dashboard/Table';
 
+// Redux 
+import { useSelector } from 'react-redux';
+
 
 
 
 const drawerWidth = 240;
-const admin = "Admin !";
+
 const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -108,6 +111,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function MiniDrawer() {
+
+    const { currentAdmin } = useSelector((state) => state.admin);
+
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -150,7 +156,7 @@ export default function MiniDrawer() {
             <Drawer className='bg-[#73E2A7]' variant="permanent" open={open}>
                 <DrawerHeader className='bg-[#73E2A7]'>
                     <div className="mx-auto">
-                        <span className='text-black text-lg font-semibold'>Hello {admin}</span>
+                        <span className='text-black text-lg font-semibold'>Hello {currentAdmin.firstName}</span>
                     </div>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}

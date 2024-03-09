@@ -3,9 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -24,7 +21,7 @@ import { adminSignUpStart, adminSignUpSuccess, adminSignUpFailure, adminSignUpWa
 const defaultTheme = createTheme();
 
 export default function AdminSignUpForm() {
-    const { error, loading, signUpAlert, signUpWarn } = useSelector((state) => state.admin);
+    const { error, loading, adminSignUpAlert, adminSignUpWarn } = useSelector((state) => state.admin);
 
     console.log(error)
 
@@ -46,10 +43,9 @@ export default function AdminSignUpForm() {
                     'Content-Type': 'application/json'
                 }
             })
-            console.log(res);
-            if (res.data == "Admin Created") {
-                dispatch(adminSignUpSuccess());
-                console.log(res.data);
+            console.log(res.data);
+            if (res.status == 200) {
+                dispatch(adminSignUpSuccess(res.data));
             } else if (res.data == "Admin Already Exists") {
                 dispatch(adminSignUpWarning());
             }
@@ -59,16 +55,16 @@ export default function AdminSignUpForm() {
             }
         } catch (error) {
             dispatch(adminSignUpFailure(error.message));
-            console.log(error)
+            console.log(error);
         }
     };
 
     return (
         <div>
             <div className='mx-auto flex justify-center'>
-                {signUpAlert && <Alert className='mb-7' severity="success">{signUpAlert}</Alert>}
+                {adminSignUpAlert && <Alert className='mb-7' severity="success">{adminSignUpAlert}</Alert>}
                 {error && <Alert className='mb-7' severity="error">{error}</Alert>}
-                {signUpWarn && <Alert className='mb-7' severity="warning">{signUpWarn}</Alert>}
+                {adminSignUpWarn && <Alert className='mb-7' severity="warning">{adminSignUpWarn}</Alert>}
             </div>
             <ThemeProvider theme={defaultTheme}>
                 <Container component="main" maxWidth="xs" className='glass'>
@@ -86,7 +82,7 @@ export default function AdminSignUpForm() {
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Sign up
+                            Seller Sign up
                         </Typography>
 
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>

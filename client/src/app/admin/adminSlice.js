@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    currentAdminr: null,
+    currentAdmin: null,
     error: null,
     loading: false,
     adminSignInWarn: null,
@@ -17,7 +17,7 @@ export const adminSlice = createSlice({
             state.loading = true;
         },
         adminSignInSuccess: (state, action) => {
-            state.currentUser = action.payload;
+            state.currentAdmin = action.payload;
             state.loading = false;
             state.error = null;
         },
@@ -28,7 +28,7 @@ export const adminSlice = createSlice({
         adminSignInWarning: (state, action) => {
             state.error = action.payload;
             state.loading = false;
-            state.signInWarn = "Incorrect Email or Password";
+            state.adminSignInWarn = "Incorrect Email or Password";
         },
         adminSignUpStart: (state) => {
             state.loading = true;
@@ -36,12 +36,12 @@ export const adminSlice = createSlice({
         adminSignUpSuccess: (state) => {
             state.loading = false;
             state.error = null;
-            state.signUpAlert = "Account created successfully";
+            state.adminSignUpAlert = "Account created successfully";
         },
         adminSignUpWarning: (state, action) => {
             state.error = action.payload;
             state.loading = false;
-            state.signUpWarn = "Admin Already Exists";
+            state.adminSignUpWarn = "Admin Already Exists";
         },
         adminSignUpFailure: (state, action) => {
             state.error = action.payload;

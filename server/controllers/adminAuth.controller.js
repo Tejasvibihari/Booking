@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import Admin from '../models/admin.model.js';
 import passport from '../passport.js';
+import { sendAdminSignUpEmail } from './signUp.email.js';
 
 const saltRounds = 10;
 
@@ -19,7 +20,12 @@ export const adminSignUp = async (req, res) => {
                     companyName: companyName
                 })
                 await createAdmin.save()
-                res.json("Admin Created")
+                const { password: pass, ...rest } = createAdmin._doc;
+                res.json(rest)
+                await sendAdminSignUpEmail(firstName, lastName, companyName, email)
+
+                console.log(rest);
+
             } catch (error) {
                 res.json(error)
             }
@@ -38,13 +44,13 @@ export const adminSignIn = function (req, res, next) {
             return next(err);
         }
         if (!admin) {
-            return res.status(400).json({ message: info.message });
+            return res.status(401).json({ message: info.message });
         }
         req.logIn(admin, function (err) {
             if (err) {
                 return next(err);
             }
-            return res.json({ message: 'Admin logged in successfully' });
+            return res.json({ admin, message: 'Admin logged in successfully' });
         });
     })(req, res, next);
 }
