@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { required } from 'nodemon/lib/config';
 
 
 const hotelDataSchema = mongoose.Schema({
@@ -37,6 +38,17 @@ const hotelDataSchema = mongoose.Schema({
     price: {
         type: Number,
         required: true
+    },
+    mobile: {
+        type: Number,
+        required: true
+    },
+    email: {
+        type: Email,
+        required: true
+    },
+    adminId: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'User'
     }
 });
 
