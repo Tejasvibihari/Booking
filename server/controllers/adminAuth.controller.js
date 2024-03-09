@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import Admin from '../models/admin.model.js';
+import passport from '../passport.js';
 
 const saltRounds = 10;
 
@@ -28,4 +29,22 @@ export const adminSignUp = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
+}
+
+
+export const adminSignIn = function (req, res, next) {
+    passport.authenticate('admin', function (err, admin, info) {
+        if (err) {
+            return next(err);
+        }
+        if (!admin) {
+            return res.status(400).json({ message: info.message });
+        }
+        req.logIn(admin, function (err) {
+            if (err) {
+                return next(err);
+            }
+            return res.json({ message: 'Admin logged in successfully' });
+        });
+    })(req, res, next);
 }
