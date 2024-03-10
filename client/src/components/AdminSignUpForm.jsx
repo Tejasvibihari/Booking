@@ -43,7 +43,7 @@ export default function AdminSignUpForm() {
                     'Content-Type': 'application/json'
                 }
             })
-            console.log(res.data);
+            // console.log(res.data);
             if (res.status == 200) {
                 dispatch(adminSignUpSuccess(res.data));
             } else if (res.data == "Admin Already Exists") {

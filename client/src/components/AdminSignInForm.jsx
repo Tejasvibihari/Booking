@@ -43,7 +43,7 @@ export default function AdminSignInForm() {
                 password: data.get('password')
             };
             const res = await axios.post("/api/auth/adminsignin", formData)
-            console.log(res);
+            //console.log(res);
             if (res.data.message === "Admin logged in successfully") {
                 dispatch(adminSignInSuccess(res.data.admin));
                 navigate("/dashboard");

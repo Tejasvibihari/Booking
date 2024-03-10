@@ -24,14 +24,15 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import DashboarContent from './Dashboard/DashboardContent';
-import Table from './Dashboard/Table';
+import DashboarContent from '../components/Dashboard/DashboardContent';
+import Table from '../components/Dashboard/Table';
+import { Link } from 'react-router-dom';
 
 // Redux 
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 
-
+const firstName = "tejasvi"
 
 const drawerWidth = 240;
 
@@ -112,7 +113,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function MiniDrawer() {
 
-    const { currentAdmin } = useSelector((state) => state.admin);
+    // const { currentAdmin } = useSelector((state) => state.admin);
 
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -156,7 +157,7 @@ export default function MiniDrawer() {
             <Drawer className='bg-[#73E2A7]' variant="permanent" open={open}>
                 <DrawerHeader className='bg-[#73E2A7]'>
                     <div className="mx-auto">
-                        <span className='text-black text-lg font-semibold'>Hello {currentAdmin.firstName}</span>
+                        <span className='text-black text-lg font-semibold'>Hello {firstName}</span>
                     </div>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -165,27 +166,28 @@ export default function MiniDrawer() {
                 <Divider />
                 {/* Dasboard Menu Icon with Name */}
                 <List className='bg-[#73E2A7]'>
-                    <ListItem disablePadding sx={{ display: 'block' }}>
-                        <ListItemButton
-                            sx={{
-                                minHeight: 48,
-                                justifyContent: open ? 'initial' : 'center',
-                                px: 2.5,
-                            }}
-                        >
-                            <ListItemIcon
+                    <Link to="/dashboard">
+                        <ListItem disablePadding sx={{ display: 'block' }}>
+                            <ListItemButton
                                 sx={{
-                                    minWidth: 0,
-                                    mr: open ? 3 : 'auto',
-                                    justifyContent: 'center',
+                                    minHeight: 48,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
                                 }}
                             >
-                                <DashboardIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Dashboard" sx={{ opacity: open ? 1 : 0 }} />
-                        </ListItemButton>
-
-                    </ListItem>
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <DashboardIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Dashboard" sx={{ opacity: open ? 1 : 0 }} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Link>
                     <ListItem className='hover:bg-[#73E2A7]' disablePadding sx={{ display: 'block' }}>
                         <ListItemButton
                             sx={{
@@ -228,26 +230,28 @@ export default function MiniDrawer() {
                         </ListItemButton>
 
                     </ListItem>
-                    <ListItem disablePadding sx={{ display: 'block' }}>
-                        <ListItemButton
-                            sx={{
-                                minHeight: 48,
-                                justifyContent: open ? 'initial' : 'center',
-                                px: 2.5,
-                            }}
-                        >
-                            <ListItemIcon
+                    <Link to="/listing">
+                        <ListItem disablePadding sx={{ display: 'block' }}>
+                            <ListItemButton
                                 sx={{
-                                    minWidth: 0,
-                                    mr: open ? 3 : 'auto',
-                                    justifyContent: 'center',
+                                    minHeight: 48,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
                                 }}
                             >
-                                <ChecklistRoundedIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Listing" sx={{ opacity: open ? 1 : 0 }} />
-                        </ListItemButton>
-                    </ListItem>
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <ChecklistRoundedIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Listing" sx={{ opacity: open ? 1 : 0 }} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Link>
                 </List>
                 <Divider />
                 <List className='bg-[#73E2A7]'>
@@ -295,11 +299,13 @@ export default function MiniDrawer() {
                     </ListItem>
                 </List>
             </Drawer>
+
+            {/* Content Of Admin Panel */}
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
                 <DashboarContent />
                 <Table />
             </Box>
-        </Box>
+        </Box >
     );
 }
