@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { required } from 'nodemon/lib/config';
+
 
 
 const hotelDataSchema = mongoose.Schema({
@@ -35,7 +35,7 @@ const hotelDataSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    price: {
+    basePrice: {
         type: Number,
         required: true
     },
@@ -43,12 +43,31 @@ const hotelDataSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    email: {
-        type: Email,
-        required: true
+    amenities: {
+        swimmingPool: {
+            type: Boolean,
+            default: false
+        },
+        gym: {
+            type: Boolean,
+            default: false
+        },
+        restaurant: {
+            type: Boolean,
+            default: false
+        },
+        spa: {
+            type: Boolean,
+            default: false
+        },
+        parking: {
+            type: Boolean,
+            default: false
+        },
     },
     adminId: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User'
+        type: String,
+        required: true
     }
 });
 

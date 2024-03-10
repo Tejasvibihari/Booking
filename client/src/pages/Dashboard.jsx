@@ -29,10 +29,10 @@ import Table from '../components/Dashboard/Table';
 import { Link } from 'react-router-dom';
 
 // Redux 
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
-const firstName = "tejasvi"
+// const firstName = "tejasvi"
 
 const drawerWidth = 240;
 
@@ -113,7 +113,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function MiniDrawer() {
 
-    // const { currentAdmin } = useSelector((state) => state.admin);
+    const { currentAdmin } = useSelector((state) => state.admin);
 
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -157,7 +157,7 @@ export default function MiniDrawer() {
             <Drawer className='bg-[#73E2A7]' variant="permanent" open={open}>
                 <DrawerHeader className='bg-[#73E2A7]'>
                     <div className="mx-auto">
-                        <span className='text-black text-lg font-semibold'>Hello {firstName}</span>
+                        <span className='text-black text-lg font-semibold'>Hello {currentAdmin.firstName}</span>
                     </div>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}

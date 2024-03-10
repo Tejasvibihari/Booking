@@ -19,8 +19,10 @@ import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import DialogContent from '@mui/material/DialogContent';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function FormDialog() {
+    const { currentAdmin } = useSelector((state) => state.admin);
     const [open, setOpen] = React.useState(false);
     const [zip, setZip] = useState('');
     const [city, setCity] = useState("");
@@ -61,16 +63,18 @@ export default function FormDialog() {
             description: data.get('description'),
             hotelCategory: data.get('hotelCategory'),
             basePrice: data.get('basePrice'),
+            mobile: data.get('mobile'),
             amenities: {
                 swimmingPool: data.get('swimmingPool') === 'on' ? true : false,
                 gym: data.get('gym') === 'on' ? true : false,
                 restaurant: data.get('restaurant') === 'on' ? true : false,
                 spa: data.get('spa') === 'on' ? true : false,
                 parking: data.get('parking') === 'on' ? true : false
-            }
+            },
+            adminId: currentAdmin._id
         }
         const res = await axios.post("api/hotel/addHotel", hotelData);
-        console.log(res);
+        console.log(hotelData);
         console.log('Hotel Submitted');
     }
 
@@ -176,6 +180,16 @@ export default function FormDialog() {
                                         autoComplete="description"
                                     />
                                 </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="mobile"
+                                        label="Mobile Number"
+                                        name="mobile"
+                                        autoComplete="mobile"
+                                    />
+                                </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <TextField
                                         required
@@ -186,6 +200,7 @@ export default function FormDialog() {
                                         autoComplete="price"
                                     />
                                 </Grid>
+
                                 <Grid item xs={12} sm={6}>
                                     <FormControl>
                                         <FormLabel id="demo-radio-buttons-group-label">Hotel Category</FormLabel>
