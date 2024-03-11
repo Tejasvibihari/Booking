@@ -7,7 +7,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminSignIn from './pages/AdminSignIn';
 import Listing from './pages/Listing'
 import UserProfile from './pages/UserProfile';
-import PrivateRoute from './pages/PrivateRoute';
+import UserPrivateRoute from './pages/UserPrivateRoute';
+import AdminPrivateRoute from './pages/AdminPrivateRoute';
+
+
 
 export default function App() {
   return (
@@ -15,14 +18,22 @@ export default function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/adminsignin" element={<AdminSignIn />} />
-          <Route path="/listing" element={<Listing />} />
-          <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Home />} />
+
+
+          {/* User Private Route  */}
+          <Route element={<UserPrivateRoute />}>
             <Route path="/userprofile" element={<UserProfile />} />
           </Route >
+          {/* Admin Private Routes  */}
+          <Route element={<AdminPrivateRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/listing" element={<Listing />} />
+          </Route >
+
+
         </Routes>
       </BrowserRouter>
 
