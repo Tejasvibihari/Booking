@@ -80,13 +80,14 @@ export default function AdminSignInForm() {
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                             <LockOutlinedIcon />
                         </Avatar>
-                        <Typography component="h1" variant="h5">
+                        <Typography component="h1" variant="h5" className='text-white'>
                             Seller Sign In
                         </Typography>
-                        <Box component="form" noValidate sx={{ mt: 3 }} onSubmit={handleSubmit} >
-                            <Grid container spacing={2}>
+                        <Box component="form" noValidate sx={{ mt: 3 }} onSubmit={handleSubmit}  >
+                            <Grid container spacing={2} >
                                 <Grid item xs={12}>
                                     <TextField
+                                        className='border-white'
                                         required
                                         fullWidth
                                         id="email"

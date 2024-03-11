@@ -12,12 +12,14 @@ export default function AdminSignIn() {
     }
     return (
         <>
-            <div className='flex flex-col justify-center mt-24'>
-                {haveAccount ? <AdminSignInForm /> : <AdminSignUpForm />}
-                <div className="flex flex-col justify-center items-center">
-                    <button onClick={handleClick} className="text-sm">
-                        {haveAccount ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
-                    </button>
+            <div className='gradient-background h-screen'>
+                <div className='flex flex-col justify-center pt-24'>
+                    {haveAccount ? <AdminSignInForm /> : <AdminSignUpForm />}
+                    <div className="flex flex-col justify-center items-center">
+                        <button onClick={handleClick} className="text-sm">
+                            {haveAccount ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
+                        </button>
+                    </div>
                 </div>
             </div>
         </>

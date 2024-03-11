@@ -74,7 +74,7 @@ export default function FormDialog() {
             adminId: currentAdmin._id
         }
         const res = await axios.post("api/hotel/addHotel", hotelData);
-        console.log(hotelData);
+        console.log(res);
         console.log('Hotel Submitted');
     }
 

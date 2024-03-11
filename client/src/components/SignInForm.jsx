@@ -45,7 +45,7 @@ export default function SignInForm() {
             const res = await axios.post("/api/auth/signin", formData)
             console.log(res);
             if (res.data.message === "Sign In Successfully") {
-                dispatch(signInSuccess(res));
+                dispatch(signInSuccess(res.data));
                 console.log(res.data);
                 navigate("/");
             } else {
