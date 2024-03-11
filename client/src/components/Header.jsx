@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import Avatar from '@mui/material/Avatar';
 export default function Header() {
+  const { currentUser } = useSelector((state) => state.user);
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
@@ -15,7 +17,7 @@ export default function Header() {
       window.removeEventListener("scroll", handleScroll); // Cleanup on unmount
     };
   }, []);
-
+  console.log(currentUser);
   return (
     <>
       <header
@@ -38,11 +40,13 @@ export default function Header() {
               Booking
             </Link>
             <div className="flex items-center justify-end w-full">
-              <Link to="/signin">
-                <button className="w-40 h-10 text-black px-7 py-2 text-center bg-[#73E2A7] text-sm rounded-full hover:bg-transparent hover:text-white hover:border-[1px] border-white transition-all duration-300">
-                  Sign in
-                </button>
-              </Link>
+
+              {currentUser ? <Link to="/userprofile"><Avatar alt={currentUser.rest.firstName} src={currentUser.rest.avatar} /></Link> : <Link to="/signin"><button className="w-40 h-10 text-black px-7 py-2 text-center bg-[#73E2A7] text-sm rounded-full hover:bg-transparent hover:text-white hover:border-[1px] border-white transition-all duration-300">
+                Sign in
+              </button> </Link>
+              }
+
+
             </div>
           </div>
         </div>
