@@ -22,7 +22,7 @@ export default function ShortCard({ title, value, link, linkTitle }) {
 
 ShortCard.propTypes = {
     title: Propstypes.string,
-    value: Propstypes.number,
+    value: Propstypes.string,
     link: Propstypes.string,
     linkTitle: Propstypes.string,
 }

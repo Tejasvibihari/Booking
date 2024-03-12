@@ -16,8 +16,9 @@ import { useEffect } from 'react';
 // Redux 
 import { useSelector, useDispatch } from 'react-redux'
 import { adminSignInStart, adminSignInSuccess, adminSignInFailure, adminSignInWarning } from '../app/admin/adminSlice'
-
+import { storeHotelData } from '../app/admin/hotelSlice';
 import Alert from '@mui/material/Alert';
+
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -25,7 +26,7 @@ import Alert from '@mui/material/Alert';
 const defaultTheme = createTheme();
 
 export default function AdminSignInForm() {
-    // const signInError = useSelector(state => state.user.signInError);
+
     const { error, loading, adminSignInError, adminSignInWarn, } = useSelector((state) => state.admin);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -43,9 +44,10 @@ export default function AdminSignInForm() {
                 password: data.get('password')
             };
             const res = await axios.post("/api/auth/adminsignin", formData)
-            //console.log(res);
+            console.log(res);
             if (res.data.message === "Admin logged in successfully") {
-                dispatch(adminSignInSuccess(res.data.admin));
+                dispatch(adminSignInSuccess(res.data.rest));
+                dispatch(storeHotelData(res.data.hotel))
                 navigate("/dashboard");
             } else {
                 dispatch(adminSignInFailure(res.data.message))

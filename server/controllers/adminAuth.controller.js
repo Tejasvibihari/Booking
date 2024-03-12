@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt';
 import Admin from '../models/admin.model.js';
+import HotelData from '../models/hotelData.model.js';
 import passport from '../passport.js';
 import { sendAdminSignUpEmail } from './signUp.email.js';
+import jwt from 'jsonwebtoken';
 
 const saltRounds = 10;
 
@@ -39,23 +41,26 @@ export const adminSignUp = async (req, res) => {
 
 
 export const adminSignIn = function (req, res, next) {
-    passport.authenticate('admin', function (err, admin, info) {
+    passport.authenticate('admin', async function (err, admin, info) {
         if (err) {
             return next(err);
         }
         if (!admin) {
             return res.status(401).json({ message: info.message });
         }
-        req.logIn(admin, function (err) {
+        req.logIn(admin, async function (err) {
             if (err) {
                 return next(err);
             }
-            const token = jwt.sign({ id: user._id }, );
+            const hotelData = await HotelData.find({ adminId: admin._id });
+            // console.log(`Hello${hotelData}`);
+            const token = jwt.sign({ id: admin._id, hotel: hotelData }, "ADMINHOTELBOOKING");
             const { password: pass, ...rest } = admin._doc;
+            const hotel = hotelData;
             return res
                 .cookie('access_token', token, { httpOnly: true })
                 .status(200)
-                .json({ rest, message: "Sign In Successfully" });
+                .json({ rest, hotel, message: "Admin logged in successfully" });
         });
     })(req, res, next);
 }

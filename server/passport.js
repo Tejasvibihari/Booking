@@ -60,5 +60,39 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
+passport.serializeUser((admin, done) => {
+    done(null, admin.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+    try {
+        const admin = await Admin.findById(id);
+        done(null, admin);
+    } catch (error) {
+        done(error);
+    }
+});
+
+// const datta = {
+
+//     "adminId": "65efcf3ef3dcc116f6755322",
+//     "hotelName": "Bihari Hotel",
+//     "address": "jsdbgjdsbg",
+//     "city": "Jaipur",
+//     "state": "Rajasthan",
+//     "zip": "302017",
+//     "geolocation": "dftgyhjnkml",
+//     "description": "edrtfghyuj",
+//     "hotelCategory": "Budget",
+//     "basePrice": "7000",
+//     "mobile": "6205731150",
+//     "amenities": {
+//         "swimmingPool": true,
+//         "gym": false,
+//         "restaurant": true,
+//         "spa": false,
+//         "parking": true
+//     }
+// }
 
 export default passport;

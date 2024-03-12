@@ -19,10 +19,15 @@ import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import DialogContent from '@mui/material/DialogContent';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addHotelFailure, addHotelStart, storeHotelData } from '../../app/admin/hotelSlice';
+// import { adminAddHotelSuccess } from '../../app/admin/adminSlice';
 
 export default function FormDialog() {
     const { currentAdmin } = useSelector((state) => state.admin);
+    // const { loading, } = useSelector((state) => state.addHotel);
+
+    const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
     const [zip, setZip] = useState('');
     const [city, setCity] = useState("");
@@ -46,36 +51,44 @@ export default function FormDialog() {
             setCity(response.data[0].PostOffice[0].District);
             setState(response.data[0].PostOffice[0].State);
         }
-
         fetchData();
     }, [zip, city, state]);
 
+    const id = currentAdmin._id
+
     const handleHotelSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const hotelData = {
-            hotelName: data.get('hotelName'),
-            address: data.get('address'),
-            city: data.get('city'),
-            state: data.get('state'),
-            zip: data.get('zip'),
-            geolocation: data.get('geolocation'),
-            description: data.get('description'),
-            hotelCategory: data.get('hotelCategory'),
-            basePrice: data.get('basePrice'),
-            mobile: data.get('mobile'),
-            amenities: {
-                swimmingPool: data.get('swimmingPool') === 'on' ? true : false,
-                gym: data.get('gym') === 'on' ? true : false,
-                restaurant: data.get('restaurant') === 'on' ? true : false,
-                spa: data.get('spa') === 'on' ? true : false,
-                parking: data.get('parking') === 'on' ? true : false
-            },
-            adminId: currentAdmin._id
+        try {
+            dispatch(addHotelStart());
+            const data = new FormData(event.currentTarget);
+            const hotelData = {
+                adminId: id,
+                hotelName: data.get('hotelName'),
+                address: data.get('address'),
+                city: data.get('city'),
+                state: data.get('state'),
+                zip: data.get('zip'),
+                geolocation: data.get('geolocation'),
+                description: data.get('description'),
+                hotelCategory: data.get('hotelCategory'),
+                basePrice: data.get('basePrice'),
+                mobile: data.get('mobile'),
+                amenities: {
+                    swimmingPool: data.get('swimmingPool') === 'on' ? true : false,
+                    gym: data.get('gym') === 'on' ? true : false,
+                    restaurant: data.get('restaurant') === 'on' ? true : false,
+                    spa: data.get('spa') === 'on' ? true : false,
+                    parking: data.get('parking') === 'on' ? true : false
+                },
+            }
+            const res = await axios.post("api/hotel/addHotel", hotelData);
+            console.log(res.data);
+            dispatch(storeHotelData(res.data.newHotel))
+            console.log(res.data);
+
+        } catch (error) {
+            dispatch(addHotelFailure(error.message))
         }
-        const res = await axios.post("api/hotel/addHotel", hotelData);
-        console.log(res);
-        console.log('Hotel Submitted');
     }
 
     return (

@@ -5,7 +5,9 @@ import adminAuthRouter from './router/adminAuth.route.js';
 import hotelAddRouter from './router/addHotel.route.js';
 import passport from './passport.js';
 import session from 'express-session';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const app = express();
 app.use(express.json());
 

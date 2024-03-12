@@ -3,6 +3,8 @@ import User from '../models/user.model.js';
 import passport from '../passport.js';
 import { sendSignUpEmail } from './signUp.email.js';
 import jwt from 'jsonwebtoken';
+// import dotenv from 'dotenv';
+// dotenv.config();
 
 
 
@@ -53,14 +55,14 @@ export const signUp = async (req, res) => {
 //     })(req, res, next);
 // };
 
-const key = "BOOKING"
+// const key = "BOOKING"
 export const signIn = async (req, res, next) => {
     passport.authenticate('user', (err, user, info) => {
         if (err) { return next(err); }
         if (!user) { return res.status(401).json({ message: "Incorrect Email or Password" }); }
         req.logIn(user, (err) => {
             if (err) { return next(err); }
-            const token = jwt.sign({ id: user._id }, key);
+            const token = jwt.sign({ id: user._id }, "USERHOTELBOOKING");
             const { password: pass, ...rest } = user._doc;
             return res
                 .cookie('access_token', token, { httpOnly: true })

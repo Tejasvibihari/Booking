@@ -25,7 +25,7 @@ export const addHotel = async (req, res) => {
             }
         });
         await newHotel.save();
-        res.status(201).json(newHotel);
+        res.status(201).json({ newHotel, message: "Hotel Added Successfully" });
     } catch (error) {
         res.json(error)
     }

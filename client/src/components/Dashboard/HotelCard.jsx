@@ -28,7 +28,7 @@ export default function HotelCard() {
                                 </a>
                             </div>
                         </div>
-                        <div className='mt-4'>
+                        <div className='mt-1'>
                             <div className='flex flex-row rounded-md gap-2 items-center'>
                                 <h1 className="text-sm p-1 text-white bg-[#2eef64] rounded-md">4.6 <StarIcon sx={{ fontSize: 15 }} /></h1>
                                 <span className='text-sm text-gray-500'>|</span>

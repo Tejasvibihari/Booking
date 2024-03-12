@@ -21,6 +21,9 @@ const adminSchema = mongoose.Schema({
     companyName: {
         type: String,
         required: true
+    },
+    avatar: {
+        type: String,
     }
 })
 const Admin = mongoose.model('Admin', adminSchema);
