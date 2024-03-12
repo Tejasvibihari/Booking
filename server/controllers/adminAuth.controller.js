@@ -50,7 +50,12 @@ export const adminSignIn = function (req, res, next) {
             if (err) {
                 return next(err);
             }
-            return res.json({ admin, message: 'Admin logged in successfully' });
+            const token = jwt.sign({ id: user._id }, );
+            const { password: pass, ...rest } = admin._doc;
+            return res
+                .cookie('access_token', token, { httpOnly: true })
+                .status(200)
+                .json({ rest, message: "Sign In Successfully" });
         });
     })(req, res, next);
 }
