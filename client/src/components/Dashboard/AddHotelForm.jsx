@@ -60,7 +60,8 @@ export default function FormDialog() {
         event.preventDefault();
         try {
             dispatch(addHotelStart());
-            const data = new FormData(event.currentTarget);
+            const form = event.currentTarget;
+            const data = new FormData(form);
             const hotelData = {
                 adminId: id,
                 hotelName: data.get('hotelName'),
@@ -74,18 +75,17 @@ export default function FormDialog() {
                 basePrice: data.get('basePrice'),
                 mobile: data.get('mobile'),
                 amenities: {
-                    swimmingPool: data.get('swimmingPool') === 'on' ? true : false,
-                    gym: data.get('gym') === 'on' ? true : false,
-                    restaurant: data.get('restaurant') === 'on' ? true : false,
-                    spa: data.get('spa') === 'on' ? true : false,
-                    parking: data.get('parking') === 'on' ? true : false
+                    swimmingPool: form.elements.swimmingPool.checked,
+                    gym: form.elements.gym.checked,
+                    restaurant: form.elements.restaurant.checked,
+                    spa: form.elements.spa.checked,
+                    parking: form.elements.parking.checked
                 },
             }
+            console.log("Hotel Data", hotelData.amenities);
             const res = await axios.post("api/hotel/addHotel", hotelData);
-            console.log(res.data);
             dispatch(storeHotelData(res.data.newHotel))
-            console.log(res.data);
-
+            console.log("Hotel Data", res.data.newHotel.amenities);
         } catch (error) {
             dispatch(addHotelFailure(error.message))
         }

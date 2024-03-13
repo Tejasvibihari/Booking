@@ -1,7 +1,8 @@
 import HotelData from '../models/hotelData.model.js';
 
 export const addHotel = async (req, res) => {
-    const { hotelName, address, city, state, zip, geolocation, description, hotelCategory, basePrice, mobile, amenities } = req.body;
+    const { hotelName, address, city, state, zip, geolocation, description, hotelCategory, basePrice, mobile } = req.body;
+    const { swimmingPool, gym, restaurant, spa, parking } = req.body.amenities
     const adminId = req.body.adminId;
     try {
         const newHotel = new HotelData({
@@ -17,11 +18,11 @@ export const addHotel = async (req, res) => {
             basePrice: basePrice,
             mobile: mobile,
             amenities: {
-                swimmingPool: req.body.swimmingPool,
-                gym: req.body.gym,
-                restaurant: req.body.restaurant,
-                spa: req.body.spa,
-                parking: req.body.parking
+                swimmingPool: swimmingPool,
+                gym: gym,
+                restaurant: restaurant,
+                spa: spa,
+                parking: parking
             }
         });
         await newHotel.save();

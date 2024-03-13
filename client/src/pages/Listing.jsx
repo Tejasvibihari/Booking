@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 
 export default function Listing() {
     const { storeHotel } = useSelector((state) => state.hotel);
-    console.log(storeHotel);
     return (
         <>
             <AdminDashboard>

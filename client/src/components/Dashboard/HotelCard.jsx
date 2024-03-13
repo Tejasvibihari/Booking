@@ -73,6 +73,6 @@ HotelCard.propTypes = {
     hotelName: Propstypes.string,
     city: Propstypes.string,
     state: Propstypes.string,
-    basePrice: Propstypes.string,
+    basePrice: Propstypes.number,
     geolocation: Propstypes.string
 }
