@@ -74,6 +74,12 @@ export default function FormDialog() {
                 hotelCategory: data.get('hotelCategory'),
                 basePrice: data.get('basePrice'),
                 mobile: data.get('mobile'),
+                hotelLocation: {
+                    hillStation: form.elements.hillStation.checked,
+                    beach: form.elements.beach.checked,
+                    spritual: form.elements.spritual.checked,
+                    weakend: form.elements.weakend.checked,
+                },
                 amenities: {
                     swimmingPool: form.elements.swimmingPool.checked,
                     gym: form.elements.gym.checked,
@@ -246,6 +252,20 @@ export default function FormDialog() {
                                         <FormControlLabel control={<Checkbox name='wifi' />} label="WiFi" />
                                         <FormControlLabel control={<Checkbox name='tv' />} label="T.V" />
                                         <FormControlLabel control={<Checkbox name='ac' />} label="A.c" />
+                                    </FormGroup>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <FormLabel id="demo-radio-buttons-group-label">Hotel Location</FormLabel>
+                                    <FormGroup
+                                        row
+                                        aria-labelledby="demo-radio-buttons-group-label"
+                                        name="amenities"
+                                        required
+                                    >
+                                        <FormControlLabel control={<Checkbox name='hillStation' />} label="Hill Station" />
+                                        <FormControlLabel control={<Checkbox name='Beach' />} label="Beach" />
+                                        <FormControlLabel control={<Checkbox name='spritual' />} label="Spritual" />
+                                        <FormControlLabel control={<Checkbox name='weakend' />} label="Weakend" />
                                     </FormGroup>
                                 </Grid>
                             </Grid>

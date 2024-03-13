@@ -43,6 +43,24 @@ const hotelDataSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    hotelLocation: {
+        hillStation: {
+            type: Boolean,
+            default: false,
+        },
+        beach: {
+            type: Boolean,
+            default: false,
+        },
+        spritual: {
+            type: Boolean,
+            default: false,
+        },
+        weakend: {
+            type: Boolean,
+            default: false,
+        },
+    },
     amenities: {
         swimmingPool: {
             type: Boolean,
@@ -77,7 +95,7 @@ const hotelDataSchema = mongoose.Schema({
             default: false
         },
     },
-        adminId: {
+    adminId: {
         type: String,
         required: true
     }
