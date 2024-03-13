@@ -3,6 +3,7 @@ import SignUpForm from "../components/SignUpForm";
 import Divider from "@mui/material/Divider";
 import { useState } from "react";
 import SignInForm from "../components/SignInForm";
+import { Link } from "react-router-dom";
 
 
 export default function SignUp() {
@@ -31,6 +32,11 @@ export default function SignUp() {
                             <button onClick={handleClick} className="text-sm">
                                 {haveAccount ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
                             </button>
+                            <Link to="/adminsignin">
+                                <button className="text-sm">
+                                    Seller Login
+                                </button>
+                            </Link>
                         </div>
                     </div >
                 </div >
