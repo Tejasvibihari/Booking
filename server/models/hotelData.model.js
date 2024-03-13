@@ -64,8 +64,20 @@ const hotelDataSchema = mongoose.Schema({
             type: Boolean,
             default: false
         },
+        wifi: {
+            type: Boolean,
+            default: false
+        },
+        tv: {
+            type: Boolean,
+            default: false
+        },
+        ac: {
+            type: Boolean,
+            default: false
+        },
     },
-    adminId: {
+        adminId: {
         type: String,
         required: true
     }

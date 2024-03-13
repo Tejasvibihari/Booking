@@ -1,15 +1,13 @@
-import HomeWorkSharpIcon from '@mui/icons-material/HomeWorkSharp';
-import RoomPreferencesIcon from '@mui/icons-material/RoomPreferences';
+
 import MapIcon from '@mui/icons-material/Map';
 import StarIcon from '@mui/icons-material/Star';
-import WifiIcon from '@mui/icons-material/Wifi';
-import AcUnitIcon from '@mui/icons-material/AcUnit';
-import TvIcon from '@mui/icons-material/Tv';
-import PoolIcon from '@mui/icons-material/Pool';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+
+import HomeWorkSharpIcon from '@mui/icons-material/HomeWorkSharp';
+import RoomPreferencesIcon from '@mui/icons-material/RoomPreferences';
+
 import Propstypes from 'prop-types';
 
-export default function HotelCard({ hotelName, city, state, basePrice, geolocation }) {
+export default function HotelCard({ hotelName, city, state, basePrice, geolocation, wifi, tv, swimmingPool, parking, ac, spa, restaurant, gym }) {
     return (
         <>
             <div className='mt-10 max-w-7xl mx-auto shadow-lg rounded-md overflow-hidden'>
@@ -39,15 +37,21 @@ export default function HotelCard({ hotelName, city, state, basePrice, geolocati
                         </div>
                         <div className='mt-4'>
                             <div className='flex flex-row rounded-md gap-2 items-center'>
-                                <span className='text-sm text-gray-700'><WifiIcon className='' sx={{ fontSize: 25 }} />Free Wifi</span>
+                                {wifi}
                                 <span className='text-sm text-gray-700'>|</span>
-                                <span className='text-sm text-gray-700'><AcUnitIcon className='' sx={{ fontSize: 25 }} />A.C</span>
+                                {tv}
                                 <span className='text-sm text-gray-700'>|</span>
-                                <span className='text-sm text-gray-700'><TvIcon className='' sx={{ fontSize: 25 }} />T.V</span>
+                                {swimmingPool}
                                 <span className='text-sm text-gray-700'>|</span>
-                                <span className='text-sm text-gray-700'><PoolIcon className='' sx={{ fontSize: 25 }} />Swimming Pool</span>
+                                {parking}
                                 <span className='text-sm text-gray-700'>|</span>
-                                <span className='text-sm text-gray-700'><DirectionsCarIcon className='' sx={{ fontSize: 25 }} />Parking</span>
+                                {ac}
+                                <span className='text-sm text-gray-700'>|</span>
+                                {spa}
+                                <span className='text-sm text-gray-700'>|</span>
+                                {restaurant}
+                                <span className='text-sm text-gray-700'>|</span>
+                                {gym}
                             </div>
                         </div>
                         <div className='mt-10'>
@@ -74,5 +78,14 @@ HotelCard.propTypes = {
     city: Propstypes.string,
     state: Propstypes.string,
     basePrice: Propstypes.number,
-    geolocation: Propstypes.string
+    geolocation: Propstypes.string,
+    wifi: Propstypes.string,
+    tv: Propstypes.string,
+    swimmingPool: Propstypes.string,
+    parking: Propstypes.string,
+    ac: Propstypes.string,
+    spa: Propstypes.string,
+    restaurant: Propstypes.string,
+    gym: Propstypes.string
+
 }
