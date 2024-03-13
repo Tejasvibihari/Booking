@@ -20,12 +20,18 @@ import axios from 'axios';
 import DialogContent from '@mui/material/DialogContent';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addHotelFailure, addHotelStart, storeHotelData } from '../../app/admin/hotelSlice';
-// import { adminAddHotelSuccess } from '../../app/admin/adminSlice';
+import { addHotelFailure, addHotelStart, storeHotelData, hotelSuccessNotification } from '../../app/admin/hotelSlice';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
+
+
 
 export default function FormDialog() {
     const { currentAdmin } = useSelector((state) => state.admin);
-    // const { loading, } = useSelector((state) => state.addHotel);
+    const { hloading, hsuccess } = useSelector((state) => state.hotel);
+    const [snackopen, setsnackOpen] = useState(false);
 
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
@@ -33,12 +39,40 @@ export default function FormDialog() {
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
 
+    // Snack bar Handle Open And Close 
+    const handleSnackClick = () => {
+        setsnackOpen(true);
+    };
+
+    const handlesnackClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setsnackOpen(false);
+    };
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handlesnackClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
+    // Getting  The Zip code  value from form 
     const handlePinChange = (event) => {
         setZip(event.target.value);
+
     }
 
+    // To Handle Form Open And Close 
     const handleClickOpen = () => {
         setOpen(true);
+
     };
 
     const handleClose = () => {
@@ -54,7 +88,7 @@ export default function FormDialog() {
         fetchData();
     }, [zip, city, state]);
 
-    const id = currentAdmin._id
+    const id = currentAdmin._id;
 
     const handleHotelSubmit = async (event) => {
         event.preventDefault();
@@ -91,15 +125,31 @@ export default function FormDialog() {
                     ac: form.elements.ac.checked
                 },
             }
+
+            console.log(hotelData)
             const res = await axios.post("api/hotel/addHotel", hotelData);
+            console.log(res)
             dispatch(storeHotelData(res.data.newHotel))
+            dispatch(hotelSuccessNotification());
+            handleClose()
+            handleSnackClick()
         } catch (error) {
             dispatch(addHotelFailure(error.message))
+            console.log(error)
         }
     }
 
+
     return (
         <React.Fragment>
+            <Snackbar
+                open={snackopen}
+                autoHideDuration={6000}
+                onClose={handlesnackClose}
+                message="Hotel Listed Successfully"
+                action={action}
+
+            />
             <Paper className='max-w-sm h-auto' elevation={3}>
                 <div className='flex flex-col justify-center items-center h-[250px]'>
 
@@ -242,7 +292,6 @@ export default function FormDialog() {
                                         row
                                         aria-labelledby="demo-radio-buttons-group-label"
                                         name="amenities"
-                                        required
                                     >
                                         <FormControlLabel control={<Checkbox name='swimmingPool' />} label="Swimming Pool" />
                                         <FormControlLabel control={<Checkbox name='gym' />} label="Gym" />
@@ -259,11 +308,10 @@ export default function FormDialog() {
                                     <FormGroup
                                         row
                                         aria-labelledby="demo-radio-buttons-group-label"
-                                        name="amenities"
-                                        required
+                                        name="hotelLocation"
                                     >
                                         <FormControlLabel control={<Checkbox name='hillStation' />} label="Hill Station" />
-                                        <FormControlLabel control={<Checkbox name='Beach' />} label="Beach" />
+                                        <FormControlLabel control={<Checkbox name='beach' />} label="Beach" />
                                         <FormControlLabel control={<Checkbox name='spritual' />} label="Spritual" />
                                         <FormControlLabel control={<Checkbox name='weakend' />} label="Weakend" />
                                     </FormGroup>
@@ -276,8 +324,7 @@ export default function FormDialog() {
                                 sx={{ mt: 3, mb: 2 }}
 
                             >
-                                Add Hotel
-                                {/* {loading ? "Please Wait..." : "Sign Up"} */}
+                                {hloading ? "Please Wait..." : "Add Hotel"}
                             </Button>
                         </Box>
                     </DialogActions>

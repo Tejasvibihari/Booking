@@ -39,5 +39,6 @@ export const addHotel = async (req, res) => {
         res.status(201).json({ newHotel, message: "Hotel Added Successfully" });
     } catch (error) {
         res.json(error)
+        console.log(error)
     }
 }

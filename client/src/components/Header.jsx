@@ -17,7 +17,6 @@ export default function Header() {
       window.removeEventListener("scroll", handleScroll); // Cleanup on unmount
     };
   }, []);
-  console.log(currentUser);
   return (
     <>
       <header

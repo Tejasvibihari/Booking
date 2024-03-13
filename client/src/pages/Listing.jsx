@@ -18,8 +18,7 @@ export default function Listing() {
                 <AddHotelForm />
                 {storeHotel.map((hotel, index) => {
                     return (
-                        console.log(hotel),
-                        <HotelCard
+                        < HotelCard
                             key={index}
                             hotelName={hotel.hotelName}
                             city={hotel.city}
@@ -27,21 +26,29 @@ export default function Listing() {
                             basePrice={hotel.basePrice}
                             geolocation={hotel.geolocation}
                             wifi={
-                                hotel.amenities.wifi ? <div><span className='text-sm text-gray-700'><WifiIcon className='' sx={{ fontSize: 25 }} />Free Wifi</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null}
+                                hotel.amenities.wifi ? <div><span className='text-sm text-gray-700'><WifiIcon className='' sx={{ fontSize: 25 }} />Free Wifi</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null
+                            }
                             tv={
-                                hotel.amenities.tv ? <div><span className='text-sm text-gray-700'><TvIcon className='' sx={{ fontSize: 25 }} />T.V</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null}
+                                hotel.amenities.tv ? <div><span className='text-sm text-gray-700'><TvIcon className='' sx={{ fontSize: 25 }} />T.V</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null
+                            }
                             swimmingPool={
-                                hotel.amenities.swimmingPool ? <div><span className='text-sm text-gray-700'><PoolIcon className='' sx={{ fontSize: 25 }} />Swimming Pool</span><span className='text-sm text-gray-700 px-2'>|</span></div > : null}
+                                hotel.amenities.swimmingPool ? <div><span className='text-sm text-gray-700'><PoolIcon className='' sx={{ fontSize: 25 }} />Swimming Pool</span><span className='text-sm text-gray-700 px-2'>|</span></div > : null
+                            }
                             parking={
-                                hotel.amenities.parking ? <div><span className='text-sm text-gray-700'><DirectionsCarIcon className='' sx={{ fontSize: 25 }} />Parking</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null}
+                                hotel.amenities.parking ? <div><span className='text-sm text-gray-700'><DirectionsCarIcon className='' sx={{ fontSize: 25 }} />Parking</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null
+                            }
                             ac={
-                                hotel.amenities.ac ? <div><span className='text-sm text-gray-700'><AcUnitIcon className='' sx={{ fontSize: 25 }} />A.C</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null}
+                                hotel.amenities.ac ? <div><span className='text-sm text-gray-700'><AcUnitIcon className='' sx={{ fontSize: 25 }} />A.C</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null
+                            }
                             spa={
-                                hotel.amenities.spa ? <div><span className='text-sm text-gray-700'><SpaIcon className='' sx={{ fontSize: 25 }} />Spa</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null}
+                                hotel.amenities.spa ? <div><span className='text-sm text-gray-700'><SpaIcon className='' sx={{ fontSize: 25 }} />Spa</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null
+                            }
                             restaurant={
-                                hotel.amenities.restaurant ? <div><span className='text-sm text-gray-700'><RestaurantIcon className='' sx={{ fontSize: 25 }} />Restaurant</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null}
+                                hotel.amenities.restaurant ? <div><span className='text-sm text-gray-700'><RestaurantIcon className='' sx={{ fontSize: 25 }} />Restaurant</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null
+                            }
                             gym={
-                                hotel.amenities.gym ? <div><span className='text-sm text-gray-700'><FitnessCenterIcon className='' sx={{ fontSize: 25 }} />Gym</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null}
+                                hotel.amenities.gym ? <div><span className='text-sm text-gray-700'><FitnessCenterIcon className='' sx={{ fontSize: 25 }} />Gym</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null
+                            }
                         />)
                 })
 
