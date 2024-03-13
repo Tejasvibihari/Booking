@@ -38,19 +38,12 @@ export default function HotelCard({ hotelName, city, state, basePrice, geolocati
                         <div className='mt-4'>
                             <div className='flex flex-row rounded-md gap-2 items-center'>
                                 {wifi}
-                                <span className='text-sm text-gray-700'>|</span>
                                 {tv}
-                                <span className='text-sm text-gray-700'>|</span>
                                 {swimmingPool}
-                                <span className='text-sm text-gray-700'>|</span>
                                 {parking}
-                                <span className='text-sm text-gray-700'>|</span>
                                 {ac}
-                                <span className='text-sm text-gray-700'>|</span>
                                 {spa}
-                                <span className='text-sm text-gray-700'>|</span>
                                 {restaurant}
-                                <span className='text-sm text-gray-700'>|</span>
                                 {gym}
                             </div>
                         </div>

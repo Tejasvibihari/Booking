@@ -79,13 +79,14 @@ export default function FormDialog() {
                     gym: form.elements.gym.checked,
                     restaurant: form.elements.restaurant.checked,
                     spa: form.elements.spa.checked,
-                    parking: form.elements.parking.checked
+                    parking: form.elements.parking.checked,
+                    wifi: form.elements.wifi.checked,
+                    tv: form.elements.tv.checked,
+                    ac: form.elements.ac.checked
                 },
             }
-            console.log("Hotel Data", hotelData.amenities);
             const res = await axios.post("api/hotel/addHotel", hotelData);
             dispatch(storeHotelData(res.data.newHotel))
-            console.log("Hotel Data", res.data.newHotel.amenities);
         } catch (error) {
             dispatch(addHotelFailure(error.message))
         }
@@ -242,6 +243,9 @@ export default function FormDialog() {
                                         <FormControlLabel control={<Checkbox name='restaurant' />} label="Restaurant" />
                                         <FormControlLabel control={<Checkbox name='spa' />} label="Spa" />
                                         <FormControlLabel control={<Checkbox name='parking' />} label="Parking" />
+                                        <FormControlLabel control={<Checkbox name='wifi' />} label="WiFi" />
+                                        <FormControlLabel control={<Checkbox name='tv' />} label="T.V" />
+                                        <FormControlLabel control={<Checkbox name='ac' />} label="A.c" />
                                     </FormGroup>
                                 </Grid>
                             </Grid>
