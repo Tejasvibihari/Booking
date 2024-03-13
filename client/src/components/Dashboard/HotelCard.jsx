@@ -7,9 +7,9 @@ import AcUnitIcon from '@mui/icons-material/AcUnit';
 import TvIcon from '@mui/icons-material/Tv';
 import PoolIcon from '@mui/icons-material/Pool';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-// import Propstypes from 'prop-types';
+import Propstypes from 'prop-types';
 
-export default function HotelCard() {
+export default function HotelCard({ hotelName, city, state, basePrice, geolocation }) {
     return (
         <>
             <div className='mt-10 max-w-7xl mx-auto shadow-lg rounded-md overflow-hidden'>
@@ -19,11 +19,11 @@ export default function HotelCard() {
                     </div>
                     <div className="col-span-2 flex flex-col p-5">
                         <div>
-                            <h1 className='text-xl font-semibold'>Hotel Name</h1>
+                            <h1 className='text-xl font-semibold'>{hotelName}</h1>
 
                             <div className='flex flex-row justify-between items-center'>
-                                <h1 className="text-gray-500 text-sm">City State</h1>
-                                <a href="#">
+                                <h1 className="text-gray-500 text-sm">{city}, {state}</h1>
+                                <a href={geolocation}>
                                     <button className='bg-[#1C7C54] text-white rounded-sm p-2 mt-2'><MapIcon className='pr-1' />View on Map</button>
                                 </a>
                             </div>
@@ -53,7 +53,7 @@ export default function HotelCard() {
                         <div className='mt-10'>
 
                             <div className='flex flex-row justify-between items-center'>
-                                <h1 className="text-black font-semibold text-xl">₹ 7000/-</h1>
+                                <h1 className="text-black font-semibold text-xl">₹ {basePrice}/-</h1>
                                 <div className='flex flex-row gap-4'>
                                     <button className='bg-[#1C7C54] text-white rounded-sm p-2 mt-2'><HomeWorkSharpIcon className='pr-1' />Manage</button>
                                     <button className='bg-[#1C7C54] text-white rounded-sm p-2 mt-2'><RoomPreferencesIcon className='pr-1' />Manage Rooms</button>
@@ -67,4 +67,12 @@ export default function HotelCard() {
             </div >
         </>
     )
+}
+
+HotelCard.propTypes = {
+    hotelName: Propstypes.string,
+    city: Propstypes.string,
+    state: Propstypes.string,
+    basePrice: Propstypes.string,
+    geolocation: Propstypes.string
 }
