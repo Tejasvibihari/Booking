@@ -1,0 +1,226 @@
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+
+import FormLabel from '@mui/material/FormLabel';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import axios from 'axios';
+import DialogContent from '@mui/material/DialogContent';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { useRef } from 'react';
+
+
+
+
+export default function FormDialog() {
+    // const { currentAdmin } = useSelector((state) => state.admin);
+    const { hloading, hsuccess } = useSelector((state) => state.hotel);
+    const [snackopen, setsnackOpen] = useState(false);
+    const [roomImage, setRoomImage] = useState(null);
+
+    // const dispatch = useDispatch();
+    const [open, setOpen] = React.useState(false);
+    const imageRef = useRef(null);
+
+
+    const handleImageChange = (event) => {
+        setRoomImage(event.target.files[0]);
+    };
+    // Snack bar Handle Open And Close 
+    const handleSnackClick = () => {
+        setsnackOpen(true);
+    };
+
+    const handlesnackClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setsnackOpen(false);
+    };
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handlesnackClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
+
+
+    // To Handle Form Open And Close 
+    const handleClickOpen = () => {
+        setOpen(true);
+
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
+
+    // const id = currentAdmin._id;
+
+    const handleRoomSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const form = event.currentTarget;
+            const formData = new FormData(form);
+            const roomData = {
+                roomType: formData.get("roomType"),
+                amenities: {
+                    swimmingPool: form.elements.swimmingPool.checked,
+                    wifi: form.elements.wifi.checked,
+                    ac: form.elements.ac.checked,
+                    gym: form.elements.gym.checked,
+                    restaurant: form.elements.restaurant.checked,
+                    spa: form.elements.spa.checked,
+                    parking: form.elements.parking.checked,
+                    tv: form.elements.tv.checked,
+                },
+                acPrice: formData.get("acPrice"),
+                poolPrice: form.get("poolPrice"),
+                roomImage,
+            };
+            console.log(roomData);
+            try {
+                const res = await axios.post('/api/rooms/add', roomData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                console.log('Room added successfully');
+                console.log(res)
+            } catch (error) {
+                console.error('Error adding room:', error);
+            }
+        } catch (error) {
+            console.log("error")
+        }
+    };
+
+
+    return (
+        <React.Fragment>
+            <Snackbar
+                open={snackopen}
+                autoHideDuration={6000}
+                onClose={handlesnackClose}
+                message={hsuccess ? "Room Added Successfully" : "Something Went Wrong"}
+                action={action}
+
+            />
+            <Paper className='max-w-sm h-auto' elevation={3}>
+                <div className='flex flex-col justify-center items-center h-[250px]'>
+
+                    <Button className='w-full h-full' onClick={handleClickOpen}>
+                        <AddCircleIcon color="action" sx={{ fontSize: 70 }} />
+                    </Button>
+                    <Typography className='text-slate-800 font-roboto' gutterBottom align='center' variant="h4" component="h2">
+                        Add Room
+                    </Typography>
+                </div>
+            </Paper>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+            >
+                <DialogTitle>Add Room</DialogTitle>
+                <DialogContent>
+                    <DialogActions>
+                        <Box component="form" onSubmit={handleRoomSubmit} noValidate sx={{ mt: 3 }}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        autoComplete="given-name"
+                                        name="roomType"
+                                        required
+                                        fullWidth
+                                        id="roomType"
+                                        label="Room Type"
+                                        autoFocus
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="poolPrice"
+                                        label="Pool Price"
+                                        name="poolPrice"
+                                        autoComplete="price"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="acPrice"
+                                        label="A.C Price"
+                                        name="acPrice"
+                                        autoComplete="price"
+                                    />
+                                </Grid>
+
+
+                                <Grid item xs={12}>
+                                    <FormLabel id="demo-radio-buttons-group-label">Hotel Amenities</FormLabel>
+                                    <FormGroup
+                                        row
+                                        aria-labelledby="demo-radio-buttons-group-label"
+                                        name="amenities"
+                                    >
+                                        <FormControlLabel control={<Checkbox name='swimmingPool' />} label="Swimming Pool" />
+                                        <FormControlLabel control={<Checkbox name='gym' />} label="Gym" />
+                                        <FormControlLabel control={<Checkbox name='restaurant' />} label="Restaurant" />
+                                        <FormControlLabel control={<Checkbox name='spa' />} label="Spa" />
+                                        <FormControlLabel control={<Checkbox name='parking' />} label="Parking" />
+                                        <FormControlLabel control={<Checkbox name='wifi' />} label="WiFi" />
+                                        <FormControlLabel control={<Checkbox name='tv' />} label="T.V" />
+                                        <FormControlLabel control={<Checkbox name='ac' />} label="A.c" />
+                                    </FormGroup>
+                                </Grid>
+                                <Box mt={2}>
+                                    <input type="file" accept="image/*" ref={imageRef} hidden onChange={handleImageChange} />
+                                    <div onClick={() => imageRef.current.click()} className='bg-[#F1EFF2] flex w-20 h-20 justify-center items-center border-[1px] border-slate-300'>
+                                        <AddPhotoAlternateIcon />
+                                    </div>
+                                </Box>
+                            </Grid>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+
+                            >
+                                {hloading ? "Please Wait..." : "Add Room"}
+                            </Button>
+                        </Box>
+                    </DialogActions>
+                    <Button onClick={handleClose} color="error">Cancel</Button>
+                </DialogContent>
+            </Dialog>
+        </React.Fragment >
+    );
+}

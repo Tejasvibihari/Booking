@@ -11,7 +11,11 @@ import SpaIcon from '@mui/icons-material/Spa';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import Chip from '@mui/material/Chip';
-import FaceIcon from '@mui/icons-material/Face';
+
+
+
+
+
 export default function Listing() {
     const { storeHotel } = useSelector((state) => state.hotel);
     return (
