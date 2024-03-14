@@ -10,6 +10,8 @@ import PoolIcon from '@mui/icons-material/Pool';
 import SpaIcon from '@mui/icons-material/Spa';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
+import Chip from '@mui/material/Chip';
+import FaceIcon from '@mui/icons-material/Face';
 export default function Listing() {
     const { storeHotel } = useSelector((state) => state.hotel);
     return (
@@ -25,6 +27,16 @@ export default function Listing() {
                             state={hotel.state}
                             basePrice={hotel.basePrice}
                             geolocation={hotel.geolocation}
+                            hotelCategory={hotel.hotelCategory === 'luxury' ? <Chip
+                                avatar={<img alt="Natacha" src="./img/luxury.png" />}
+                                label="Luxury"
+                                color="warning"
+                                variant="outlined"
+                            /> : <Chip
+                                avatar={<img alt="Budget" src="./img/budget48.png" />}
+                                label="Budget"
+                                variant="outlined"
+                            />}
                             wifi={
                                 hotel.amenities.wifi ? <div><span className='text-sm text-gray-700'><WifiIcon className='' sx={{ fontSize: 25 }} />Free Wifi</span><span className='text-sm text-gray-700 px-2'>|</span></div> : null
                             }

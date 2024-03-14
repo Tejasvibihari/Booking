@@ -129,10 +129,15 @@ export default function FormDialog() {
             console.log(hotelData)
             const res = await axios.post("api/hotel/addHotel", hotelData);
             console.log(res)
-            dispatch(storeHotelData(res.data.newHotel))
-            dispatch(hotelSuccessNotification());
-            handleClose()
-            handleSnackClick()
+            if (res.data.message === "Hotel Added Successfully") {
+                dispatch(storeHotelData(res.data.newHotel))
+                dispatch(hotelSuccessNotification());
+                handleClose()
+                handleSnackClick()
+            }
+            else {
+                console.log("Hello")
+            }
         } catch (error) {
             dispatch(addHotelFailure(error.message))
             console.log(error)
@@ -146,7 +151,7 @@ export default function FormDialog() {
                 open={snackopen}
                 autoHideDuration={6000}
                 onClose={handlesnackClose}
-                message="Hotel Listed Successfully"
+                message={hsuccess ? "Hotel Added Successfully" : "Something Went Wrong"}
                 action={action}
 
             />

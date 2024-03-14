@@ -7,7 +7,7 @@ import RoomPreferencesIcon from '@mui/icons-material/RoomPreferences';
 
 import Propstypes from 'prop-types';
 
-export default function HotelCard({ hotelName, city, state, basePrice, geolocation, wifi, tv, swimmingPool, parking, ac, spa, restaurant, gym }) {
+export default function HotelCard({ hotelName, city, state, basePrice, geolocation, wifi, tv, swimmingPool, parking, ac, spa, restaurant, gym, hotelCategory }) {
     return (
         <>
             <div className='mt-10 max-w-7xl mx-auto shadow-lg rounded-md overflow-hidden'>
@@ -27,12 +27,17 @@ export default function HotelCard({ hotelName, city, state, basePrice, geolocati
                             </div>
                         </div>
                         <div className='mt-1'>
-                            <div className='flex flex-row rounded-md gap-2 items-center'>
-                                <h1 className="text-sm p-1 text-white bg-[#2eef64] rounded-md">4.6 <StarIcon sx={{ fontSize: 15 }} /></h1>
-                                <span className='text-sm text-gray-500'>|</span>
-                                <span className='text-sm text-gray-500'>(197 Rating)</span>
-                                <span className='text-sm text-gray-500'>|</span>
-                                <span className='text-sm text-gray-500'>Excelent</span>
+                            <div className='flex flex-row rounded-md gap-2 items-center justify-between'>
+                                <div>
+                                    <span className="text-sm p-1 text-white bg-[#2eef64] rounded-md">4.6 <StarIcon sx={{ fontSize: 15 }} /></span>
+                                    <span className='text-sm text-gray-500'> | </span>
+                                    <span className='text-sm text-gray-500'>(197 Rating)</span>
+                                    <span className='text-sm text-gray-500'> | </span>
+                                    <span className='text-sm text-gray-500'>Excelent</span>
+                                </div>
+                                <div className=''>
+                                    {hotelCategory}
+                                </div>
                             </div>
                         </div>
                         <div className='mt-4'>
@@ -79,6 +84,7 @@ HotelCard.propTypes = {
     ac: Propstypes.string,
     spa: Propstypes.string,
     restaurant: Propstypes.string,
-    gym: Propstypes.string
+    gym: Propstypes.string,
+    hotelCategory: Propstypes.string
 
 }
