@@ -31,15 +31,23 @@ export default function FormDialog() {
     // const { currentAdmin } = useSelector((state) => state.admin);
     const { hloading, hsuccess } = useSelector((state) => state.hotel);
     const [snackopen, setsnackOpen] = useState(false);
-    const [roomImage, setRoomImage] = useState(null);
 
     // const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
     const imageRef = useRef(null);
+    const [roomImage, setRoomImage] = useState(null);
 
 
     const handleImageChange = (event) => {
-        setRoomImage(event.target.files[0]);
+        const file = event.target.files[0];
+        console.log(file);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setRoomImage(reader.result);
+        };
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     };
     // Snack bar Handle Open And Close 
     const handleSnackClick = () => {
@@ -53,6 +61,7 @@ export default function FormDialog() {
 
         setsnackOpen(false);
     };
+
     const action = (
         <React.Fragment>
             <IconButton
@@ -85,26 +94,24 @@ export default function FormDialog() {
         event.preventDefault();
         try {
             const form = event.currentTarget;
-            const formData = new FormData(form);
-            const roomData = {
-                roomType: formData.get("roomType"),
-                amenities: {
-                    swimmingPool: form.elements.swimmingPool.checked,
-                    wifi: form.elements.wifi.checked,
-                    ac: form.elements.ac.checked,
-                    gym: form.elements.gym.checked,
-                    restaurant: form.elements.restaurant.checked,
-                    spa: form.elements.spa.checked,
-                    parking: form.elements.parking.checked,
-                    tv: form.elements.tv.checked,
-                },
-                acPrice: formData.get("acPrice"),
-                poolPrice: form.get("poolPrice"),
-                roomImage,
-            };
-            console.log(roomData);
+            const formData = new FormData();
+            formData.append('roomType', form.elements.roomType.value);
+            formData.append('amenities', JSON.stringify({
+                swimmingPool: form.elements.swimmingPool.checked,
+                wifi: form.elements.wifi.checked,
+                ac: form.elements.ac.checked,
+                gym: form.elements.gym.checked,
+                restaurant: form.elements.restaurant.checked,
+                spa: form.elements.spa.checked,
+                parking: form.elements.parking.checked,
+                tv: form.elements.tv.checked,
+            }));
+            formData.append('acPrice', form.elements.acPrice.value);
+            formData.append('poolPrice', form.elements.poolPrice.value);
+            formData.append('roomImage', imageRef.current.files[0]);
+            console.log(formData);
             try {
-                const res = await axios.post('/api/rooms/add', roomData, {
+                const res = await axios.post('/api/hotel/addroom', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
@@ -115,7 +122,7 @@ export default function FormDialog() {
                 console.error('Error adding room:', error);
             }
         } catch (error) {
-            console.log("error")
+            console.log(error)
         }
     };
 
@@ -200,11 +207,15 @@ export default function FormDialog() {
                                         <FormControlLabel control={<Checkbox name='ac' />} label="A.c" />
                                     </FormGroup>
                                 </Grid>
-                                <Box mt={2}>
-                                    <input type="file" accept="image/*" ref={imageRef} hidden onChange={handleImageChange} />
-                                    <div onClick={() => imageRef.current.click()} className='bg-[#F1EFF2] flex w-20 h-20 justify-center items-center border-[1px] border-slate-300'>
-                                        <AddPhotoAlternateIcon />
-                                    </div>
+                                <Box mt={2} className="px-1">
+                                    <input name='roomImage' type="file" accept="image/*" ref={imageRef} hidden onChange={handleImageChange} />
+                                    <div onClick={() => imageRef.current.click()} className='bg-[#F1EFF2] flex w-20 h-20 justify-center items-center border-[1px] border-slate-300 cursor-pointer'>
+                                        {roomImage ? (
+                                            <img src={roomImage} alt="Room" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                                        ) : (
+                                            <AddPhotoAlternateIcon />
+                                        )}
+                                    </div><div className='text-sm text-gray-600'>Hotel Image</div>
                                 </Box>
                             </Grid>
                             <Button

@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import userAuthRouter from './router/userAuth.route.js';
 import adminAuthRouter from './router/adminAuth.route.js';
 import hotelAddRouter from './router/addHotel.route.js';
+import roomAddRouter from './router/addRoom.route.js';
 import passport from './passport.js';
 import session from 'express-session';
 import dotenv from 'dotenv';
@@ -39,3 +40,5 @@ app.use('/api/auth', userAuthRouter);
 
 app.use('/api/auth', adminAuthRouter);
 app.use('/api/hotel', hotelAddRouter);
+
+app.use('/api/hotel/', roomAddRouter);

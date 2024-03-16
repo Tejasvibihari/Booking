@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
-const roomDataModel = mongoose.Schema({
+const roomDataModel = new mongoose.Schema({
     roomType: {
         type: String,
-        required: true,
+        required: true
     },
     amenities: {
         swimmingPool: {
@@ -12,11 +12,11 @@ const roomDataModel = mongoose.Schema({
         },
         wifi: {
             type: Boolean,
-            default: false,
+            default: false
         },
         ac: {
             type: Boolean,
-            default: false,
+            default: false
         },
         gym: {
             type: Boolean,
@@ -48,11 +48,11 @@ const roomDataModel = mongoose.Schema({
         required: true
     },
     roomImage: {
-        data: Buffer,
+        type: String,
         required: true
     }
 });
 
-const roomData = mongoose.model('roomData', roomDataModel);
+const RoomData = mongoose.model('RoomData', roomDataModel);
 
-export default roomData;
+export default RoomData;
