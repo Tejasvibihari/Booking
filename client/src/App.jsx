@@ -10,7 +10,7 @@ import UserProfile from './pages/UserProfile';
 import UserPrivateRoute from './pages/UserPrivateRoute';
 import AdminPrivateRoute from './pages/AdminPrivateRoute';
 import AdminDetail from './pages/AdminDetail';
-import AddRoom from './pages/AddRoom';
+import ManageRoom from './pages/ManageRoom';
 
 
 export default function App() {
@@ -33,7 +33,7 @@ export default function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/listing" element={<Listing />} />
             <Route path="/admindetail" element={<AdminDetail />} />
-            <Route path="/addRoom" element={<AddRoom />} />
+            <Route path="/manageroom/:id" element={<ManageRoom />} />
           </Route >
 
 

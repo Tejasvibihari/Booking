@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from "multer";
-import addRoom from '../controllers/addRoom.controller.js';
+import { addRoom } from '../controllers/addRoom.controller.js';
+import { getRoom } from '../controllers/addRoom.controller.js';
 
 const router = express.Router();
 const storage = multer.diskStorage({
@@ -14,6 +15,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.post('/addroom', upload.single('roomImage'), addRoom);
+router.get("/getroom/:id", getRoom);
 
 export default router;
 

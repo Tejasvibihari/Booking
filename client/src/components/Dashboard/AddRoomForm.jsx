@@ -24,7 +24,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useRef } from 'react';
 
-
+import { useParams } from 'react-router-dom';
 
 
 export default function FormDialog() {
@@ -36,6 +36,8 @@ export default function FormDialog() {
     const [open, setOpen] = React.useState(false);
     const imageRef = useRef(null);
     const [roomImage, setRoomImage] = useState(null);
+
+    const { id } = useParams();
 
 
     const handleImageChange = (event) => {
@@ -88,13 +90,13 @@ export default function FormDialog() {
 
 
 
-    // const id = currentAdmin._id;
 
     const handleRoomSubmit = async (event) => {
         event.preventDefault();
         try {
             const form = event.currentTarget;
             const formData = new FormData();
+            formData.append('hotelId', id);
             formData.append('roomType', form.elements.roomType.value);
             formData.append('amenities', JSON.stringify({
                 swimmingPool: form.elements.swimmingPool.checked,

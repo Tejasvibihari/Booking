@@ -3,9 +3,8 @@ import RoomData from '../models/roomData.model.js';
 
 
 
-const addRoom = async (req, res) => {
-    const { roomType, acPrice, poolPrice } = req.body;
-
+export const addRoom = async (req, res) => {
+    const { roomType, acPrice, poolPrice, hotelId } = req.body;
     const { swimmingPool, wifi, ac, gym, restaurant, spa, parking, tv } = req.body.amenities
 
     try {
@@ -24,6 +23,7 @@ const addRoom = async (req, res) => {
                 tv: tv,
             },
             roomImage: req.file.filename,
+            hotelId: hotelId
         });
         await addRoom.save();
         console.log(addRoom);
@@ -34,4 +34,12 @@ const addRoom = async (req, res) => {
     }
 };
 
-export default addRoom;
+export const getRoom = async (req, res) => {
+    try {
+        const room = await RoomData.find({ hotelId: req.params.id });
+        res.status(200).json(room);
+        console.log(room)
+    } catch (error) {
+        res.send(error);
+    }
+}

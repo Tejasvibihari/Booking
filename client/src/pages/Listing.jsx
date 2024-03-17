@@ -26,6 +26,7 @@ export default function Listing() {
                     return (
                         < HotelCard
                             key={index}
+                            manageRoomLink={`/manageroom/${hotel._id}`}
                             hotelName={hotel.hotelName}
                             city={hotel.city}
                             state={hotel.state}

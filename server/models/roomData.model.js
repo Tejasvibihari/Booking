@@ -50,6 +50,11 @@ const roomDataModel = new mongoose.Schema({
     roomImage: {
         type: String,
         required: true
+    },
+    hotelId: {
+        type: String,
+        required: true
+
     }
 });
 

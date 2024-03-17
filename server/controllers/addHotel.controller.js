@@ -1,4 +1,5 @@
 import HotelData from '../models/hotelData.model.js';
+import RoomData from '../models/roomData.model.js';
 
 export const addHotel = async (req, res) => {
     const { hotelName, address, city, state, zip, geolocation, description, hotelCategory, basePrice, mobile } = req.body;
@@ -42,3 +43,4 @@ export const addHotel = async (req, res) => {
         console.log(error)
     }
 }
+

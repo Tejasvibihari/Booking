@@ -2,12 +2,13 @@
 import MapIcon from '@mui/icons-material/Map';
 import StarIcon from '@mui/icons-material/Star';
 
+
 import HomeWorkSharpIcon from '@mui/icons-material/HomeWorkSharp';
 import RoomPreferencesIcon from '@mui/icons-material/RoomPreferences';
 
 import Propstypes from 'prop-types';
 
-export default function HotelCard({ hotelName, city, state, basePrice, geolocation, wifi, tv, swimmingPool, parking, ac, spa, restaurant, gym, hotelCategory }) {
+export default function HotelCard({ hotelName, city, state, basePrice, geolocation, wifi, tv, swimmingPool, parking, ac, spa, restaurant, gym, hotelCategory, manageRoomLink }) {
     return (
         <>
             <div className='mt-10 max-w-7xl mx-auto shadow-lg rounded-md overflow-hidden'>
@@ -58,7 +59,7 @@ export default function HotelCard({ hotelName, city, state, basePrice, geolocati
                                 <h1 className="text-black font-semibold text-xl">₹ {basePrice}/-</h1>
                                 <div className='flex flex-row gap-4'>
                                     <button className='bg-[#1C7C54] text-white rounded-sm p-2 mt-2'><HomeWorkSharpIcon className='pr-1' />Manage</button>
-                                    <button className='bg-[#1C7C54] text-white rounded-sm p-2 mt-2'><RoomPreferencesIcon className='pr-1' />Manage Rooms</button>
+                                    <a href={manageRoomLink}><button className='bg-[#1C7C54] text-white rounded-sm p-2 mt-2'><RoomPreferencesIcon className='pr-1' />Manage Rooms</button></a>
                                 </div>
                             </div>
                         </div>
@@ -85,6 +86,7 @@ HotelCard.propTypes = {
     spa: Propstypes.string,
     restaurant: Propstypes.string,
     gym: Propstypes.string,
-    hotelCategory: Propstypes.string
+    hotelCategory: Propstypes.string,
+    manageRoomLink: Propstypes.string
 
 }
