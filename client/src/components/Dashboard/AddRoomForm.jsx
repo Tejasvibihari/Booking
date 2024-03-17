@@ -25,14 +25,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useRef } from 'react';
 
 import { useParams } from 'react-router-dom';
-
+import { addRoomStart, addRoomSuccess, addRoomFailure, storeRoomData } from '../../app/admin/roomSlice';
 
 export default function FormDialog() {
-    // const { currentAdmin } = useSelector((state) => state.admin);
-    const { hloading, hsuccess } = useSelector((state) => state.hotel);
+    // const { currentAdmin } = useSelector((state) => state.room);
+    const { rLoading, rSuccess } = useSelector((state) => state.room);
     const [snackopen, setsnackOpen] = useState(false);
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
     const imageRef = useRef(null);
     const [roomImage, setRoomImage] = useState(null);
@@ -42,7 +42,6 @@ export default function FormDialog() {
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        console.log(file);
         const reader = new FileReader();
         reader.onloadend = () => {
             setRoomImage(reader.result);
@@ -60,7 +59,6 @@ export default function FormDialog() {
         if (reason === 'clickaway') {
             return;
         }
-
         setsnackOpen(false);
     };
 
@@ -94,6 +92,7 @@ export default function FormDialog() {
     const handleRoomSubmit = async (event) => {
         event.preventDefault();
         try {
+            dispatch(addRoomStart());
             const form = event.currentTarget;
             const formData = new FormData();
             formData.append('hotelId', id);
@@ -111,7 +110,6 @@ export default function FormDialog() {
             formData.append('acPrice', form.elements.acPrice.value);
             formData.append('poolPrice', form.elements.poolPrice.value);
             formData.append('roomImage', imageRef.current.files[0]);
-            console.log(formData);
             try {
                 const res = await axios.post('/api/hotel/addroom', formData, {
                     headers: {
@@ -119,12 +117,20 @@ export default function FormDialog() {
                     },
                 });
                 console.log('Room added successfully');
+                console.log(res.data.newRoom);
+                handleClose();
+                handleSnackClick();
+                dispatch(addRoomSuccess(res.data.newRoom));
                 console.log(res)
+                dispatch(storeRoomData(res.data.room));
             } catch (error) {
                 console.error('Error adding room:', error);
+                dispatch(addRoomFailure(error.message));
+                console.log(error.message);
             }
         } catch (error) {
             console.log(error)
+            dispatch(addRoomFailure(error.message));
         }
     };
 
@@ -135,7 +141,7 @@ export default function FormDialog() {
                 open={snackopen}
                 autoHideDuration={6000}
                 onClose={handlesnackClose}
-                message={hsuccess ? "Room Added Successfully" : "Something Went Wrong"}
+                message={rSuccess ? "Room Added Successfully" : "Something Went Wrong"}
                 action={action}
 
             />
@@ -227,7 +233,7 @@ export default function FormDialog() {
                                 sx={{ mt: 3, mb: 2 }}
 
                             >
-                                {hloading ? "Please Wait..." : "Add Room"}
+                                {rLoading ? "Please Wait..." : "Add Room"}
                             </Button>
                         </Box>
                     </DialogActions>

@@ -18,6 +18,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { adminSignInStart, adminSignInSuccess, adminSignInFailure, adminSignInWarning } from '../app/admin/adminSlice'
 import { storeHotelData } from '../app/admin/hotelSlice';
 import Alert from '@mui/material/Alert';
+import { storeRoomData } from '../app/admin/roomSlice';
 
 
 

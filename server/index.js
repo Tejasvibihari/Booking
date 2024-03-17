@@ -8,11 +8,14 @@ import passport from './passport.js';
 import session from 'express-session';
 import dotenv from 'dotenv';
 
+import path from 'path';
+const __dirname = path.resolve();
+
 dotenv.config();
 const app = express();
 app.use(express.json());
 
-
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use(session({
     secret: 'BOOKINGSECRET',
     resave: false,

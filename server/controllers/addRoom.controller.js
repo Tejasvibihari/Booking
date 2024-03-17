@@ -1,11 +1,13 @@
 import RoomData from '../models/roomData.model.js';
+// import HotelData from '../models/hotelData.model.js';
 
 
 
 
 export const addRoom = async (req, res) => {
     const { roomType, acPrice, poolPrice, hotelId } = req.body;
-    const { swimmingPool, wifi, ac, gym, restaurant, spa, parking, tv } = req.body.amenities
+    const amenities = JSON.parse(req.body.amenities);
+    const { swimmingPool, wifi, ac, gym, restaurant, spa, parking, tv } = amenities;
 
     try {
         const addRoom = new RoomData({
@@ -25,9 +27,10 @@ export const addRoom = async (req, res) => {
             roomImage: req.file.filename,
             hotelId: hotelId
         });
-        await addRoom.save();
-        console.log(addRoom);
-        res.status(201).send('Room Added successfully');
+        const newRoom = await addRoom.save();
+        const room = await RoomData.find({ hotelId });
+        res.status(201).json({ newRoom, room, message: 'Room added successfully' });
+
     } catch (error) {
         console.error('Error uploading image:', error);
         res.status(500).send('Error uploading image');
