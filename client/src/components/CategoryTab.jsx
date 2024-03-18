@@ -1,15 +1,37 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import VerticalCard from './VerticalCard';
 import ButtonGroup from '@mui/material-next/ButtonGroup';
 import Button from '@mui/material-next/Button';
 // import { EXAMPLES } from '../data.js';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import getHotel, { getHotels } from "../app/user/userHotelSlice";
 
 export default function CategoryTab() {
+    const dispatch = useDispatch();
+    const { userHotels } = useSelector((state) => state.userHotels)
     const [selectedCategory, setSelectedCategory] = useState(hotels);
     function handleSelect(selectedButton) {
         setSelectedCategory(selectedButton);
 
     }
+
+    useEffect(() => {
+        const fetchHotels = async () => {
+            try {
+                const hotels = await axios.get('/api/user/gethotels');
+                const room = await axios.get('/api/user/getroom');
+                console.log(hotels.data);
+                // const hoteData = await hotels.json();
+                // console.log(hoteData);
+                dispatch(getHotels(hotels.data))
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchHotels();
+    }, [])
+
     return (
         <>
 
@@ -27,16 +49,16 @@ export default function CategoryTab() {
             </div >
             <div className='flex'>
                 <div className='max-w-8xl bg-slate-50 mx-auto mt-5 my-5 p-5 border-[1px] rounded-md grid grid-cols-1 md:grid-cols-3 gap-4'>
-                    {selectedCategory.map((d) => {
+                    {userHotels.map((hotel, index) => {
                         return (
                             <div className='max-w-md' key="0">
                                 <VerticalCard
-                                    key={d.id}
-                                    image={d.image}
-                                    title={d.title}
-                                    content={d.content}
-                                    rating={d.rating}
-                                    discount={d.discount} />
+                                    key={index}
+                                    image={hotel.image}
+                                    title={hotel.hotelName}
+                                    content={hotel.description}
+                                    rating={hotel.rating}
+                                    discount={hotel.discount} />
                             </div>
                         )
                     })}

@@ -98,7 +98,19 @@ const hotelDataSchema = new mongoose.Schema({
     adminId: {
         type: String,
         required: true
-    }
+    },
+    discount: {
+        type: Number,
+    },
+    hotelImage: {
+        type: String,
+        // required: true
+    },
+    rating: {
+        type: Number,
+        required: true
+    },
+
 });
 
 const HotelData = mongoose.model('HotelData', hotelDataSchema);

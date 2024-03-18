@@ -28,6 +28,7 @@ export default function Listing() {
                             key={index}
                             manageRoomLink={`/manageroom/${hotel._id}`}
                             hotelName={hotel.hotelName}
+                            image={`http://localhost:3000/uploads/${hotel.hotelImage}`}
                             city={hotel.city}
                             state={hotel.state}
                             basePrice={hotel.basePrice}

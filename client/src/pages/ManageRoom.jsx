@@ -3,9 +3,9 @@ import AddRoomForm from '../components/Dashboard/AddRoomForm'
 import AdminDashboard from './AdminDashboard'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 // import productCard from '../components/Dashboard/productCard'
-
+import { useSelector, useDispatch } from 'react-redux'
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import WifiIcon from '@mui/icons-material/Wifi';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
@@ -15,34 +15,35 @@ import SpaIcon from '@mui/icons-material/Spa';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import RoomCard from '../components/Dashboard/RoomCard'
-
+import { storeRoomData } from '../app/admin/roomSlice'
 export default function ManageRoom() {
     const { id } = useParams();
-    const [product, setproduct] = useState(null);
-
+    const { storeRoom } = useSelector((state) => state.room);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchproduct = async () => {
             try {
                 const response = await axios.get(`/api/hotel/getroom/${id}`);
-                setproduct(response.data);
+                dispatch(storeRoomData(response.data));
             } catch (error) {
                 console.error('Error fetching product:', error);
+
             }
         };
 
         fetchproduct();
     }, [id]);
-    useEffect(() => {
-        console.log(product);
-    }, [product]);
+    // useEffect(() => {
+    //     console.log(storeRoom);
+    // }, [storeRoom]);
 
-
+    const filteredRoom = storeRoom.filter((room) => room.hotelId === id);
     return (
         <div>
             <AdminDashboard>
                 <AddRoomForm />
-                {product && product.map((room, index) => {
+                {filteredRoom && filteredRoom.map((room, index) => {
                     return (
                         <RoomCard
                             key={index}

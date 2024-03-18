@@ -5,13 +5,14 @@ import hotelReducer from './admin/hotelSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistStore, persistReducer } from 'redux-persist';
 import roomSlice from './admin/roomSlice';
-
+import userHotels from "./user/userHotelSlice";
 
 const rootReducer = combineReducers({
     user: userReducer,
     admin: adminReducer,
     hotel: hotelReducer,
-    room: roomSlice
+    room: roomSlice,
+    userHotels: userHotels,
 });
 const persistConfig = {
     key: "root",

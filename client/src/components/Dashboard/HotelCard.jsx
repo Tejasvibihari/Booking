@@ -8,13 +8,13 @@ import RoomPreferencesIcon from '@mui/icons-material/RoomPreferences';
 
 import Propstypes from 'prop-types';
 
-export default function HotelCard({ hotelName, city, state, basePrice, geolocation, wifi, tv, swimmingPool, parking, ac, spa, restaurant, gym, hotelCategory, manageRoomLink }) {
+export default function HotelCard({ hotelName, city, state, basePrice, geolocation, wifi, tv, swimmingPool, parking, ac, spa, restaurant, gym, hotelCategory, manageRoomLink, image }) {
     return (
         <>
             <div className='mt-10 max-w-7xl mx-auto shadow-lg rounded-md overflow-hidden'>
                 <div className='grid grid-cols-1 grid-col-1 gap-5 md:grid-cols-3 '>
                     <div>
-                        <img src="./img/c1.jpeg" className="" />
+                        <img src={image} className="" />
                     </div>
                     <div className="col-span-2 flex flex-col p-5">
                         <div>
@@ -87,6 +87,7 @@ HotelCard.propTypes = {
     restaurant: Propstypes.string,
     gym: Propstypes.string,
     hotelCategory: Propstypes.string,
-    manageRoomLink: Propstypes.string
+    manageRoomLink: Propstypes.string,
+    image: Propstypes.string
 
 }

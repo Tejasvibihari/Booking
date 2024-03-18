@@ -25,19 +25,6 @@ export default function Hero() {
                         </div>
                     </div>
                 </div>
-                <div className="embla__slide">
-                    <div className="relative">
-                        <img
-                            src="./images/c2.jpeg"
-                            alt="Slide 1"
-                            className="object-cover w-full h-screen"
-                        />
-                        <div className="absolute flex mx-auto items-center justify-center inset-0 bg-black opacity-75 text-white text-4xl font-bold text-center">
-                            <TypewriterEffectSmoothDemo />
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     );

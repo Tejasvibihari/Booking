@@ -27,12 +27,15 @@ export const roomSlice = createSlice({
             state.rSuccess = false;
         },
         storeRoomData: (state, action) => {
-            if (Array.isArray(action.payload)) {
-                state.storeRoom.push(...action.payload);
-            } else {
-                state.storeRoom.push(action.payload);
-            }
+            state.storeRoom = action.payload;
         },
+        // storeRoomData: (state, action) => {
+        //     if (Array.isArray(action.payload)) {
+        //         state.storeRoom.push(...action.payload);
+        //     } else {
+        //         state.storeRoom.push(action.payload);
+        //     }
+        // },
         RoomSuccessNotification: (state) => {
             state.rSuccess = true;
             state.rLoading = false;

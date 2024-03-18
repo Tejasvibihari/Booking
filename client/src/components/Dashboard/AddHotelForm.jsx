@@ -17,6 +17,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import DialogContent from '@mui/material/DialogContent';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -24,6 +25,7 @@ import { addHotelFailure, addHotelStart, storeHotelData, hotelSuccessNotificatio
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { useRef } from 'react';
 
 
 
@@ -32,13 +34,25 @@ export default function FormDialog() {
     const { currentAdmin } = useSelector((state) => state.admin);
     const { hloading, hsuccess } = useSelector((state) => state.hotel);
     const [snackopen, setsnackOpen] = useState(false);
+    const imageRef = useRef(null);
 
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
     const [zip, setZip] = useState('');
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
+    const [hotelImage, setHotelImage] = useState(null);
 
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setHotelImage(reader.result);
+        };
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    };
     // Snack bar Handle Open And Close 
     const handleSnackClick = () => {
         setsnackOpen(true);
@@ -95,39 +109,46 @@ export default function FormDialog() {
         try {
             dispatch(addHotelStart());
             const form = event.currentTarget;
-            const data = new FormData(form);
-            const hotelData = {
-                adminId: id,
-                hotelName: data.get('hotelName'),
-                address: data.get('address'),
-                city: data.get('city'),
-                state: data.get('state'),
-                zip: data.get('zip'),
-                geolocation: data.get('geolocation'),
-                description: data.get('description'),
-                hotelCategory: data.get('hotelCategory'),
-                basePrice: data.get('basePrice'),
-                mobile: data.get('mobile'),
-                hotelLocation: {
-                    hillStation: form.elements.hillStation.checked,
-                    beach: form.elements.beach.checked,
-                    spritual: form.elements.spritual.checked,
-                    weakend: form.elements.weakend.checked,
-                },
-                amenities: {
-                    swimmingPool: form.elements.swimmingPool.checked,
-                    gym: form.elements.gym.checked,
-                    restaurant: form.elements.restaurant.checked,
-                    spa: form.elements.spa.checked,
-                    parking: form.elements.parking.checked,
-                    wifi: form.elements.wifi.checked,
-                    tv: form.elements.tv.checked,
-                    ac: form.elements.ac.checked
-                },
-            }
+            const data = new FormData();
 
-            console.log(hotelData)
-            const res = await axios.post("api/hotel/addHotel", hotelData);
+            data.append('adminId', id);
+            data.append('hotelName', form.elements.hotelName.value);
+            data.append('address', form.elements.address.value);
+            data.append('city', form.elements.city.value);
+            data.append('state', form.elements.state.value);
+            data.append('zip', form.elements.zip.value);
+            data.append('geolocation', form.elements.geolocation.value);
+            data.append('description', form.elements.description.value);
+            data.append('hotelCategory', form.elements.hotelCategory.value);
+            data.append('basePrice', form.elements.basePrice.value);
+            data.append('mobile', form.elements.mobile.value);
+            data.append('discount', form.elements.discount.value);
+            data.append('rating', form.elements.rating.value);
+            data.append('hotelLocation', JSON.stringify({
+                hillStation: form.elements.hillStation.checked,
+                beach: form.elements.beach.checked,
+                spritual: form.elements.spritual.checked,
+                weakend: form.elements.weakend.checked,
+            }));
+
+            data.append('amenities', JSON.stringify({
+                swimmingPool: form.elements.swimmingPool.checked,
+                gym: form.elements.gym.checked,
+                restaurant: form.elements.restaurant.checked,
+                spa: form.elements.spa.checked,
+                parking: form.elements.parking.checked,
+                wifi: form.elements.wifi.checked,
+                tv: form.elements.tv.checked,
+                ac: form.elements.ac.checked
+            }));
+            data.append('hotelImage', imageRef.current.files[0]);
+            console.log(imageRef.current.files[0])
+            console.log(data)
+            const res = await axios.post("api/hotel/addHotel", data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             console.log(res)
             if (res.data.message === "Hotel Added Successfully") {
                 dispatch(storeHotelData(res.data.newHotel))
@@ -278,7 +299,25 @@ export default function FormDialog() {
                                         autoComplete="price"
                                     />
                                 </Grid>
-
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        fullWidth
+                                        id="discount"
+                                        label="Discount"
+                                        name="discount"
+                                        autoComplete="discount"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="rating"
+                                        label="Rating"
+                                        name="rating"
+                                        autoComplete="rating"
+                                    />
+                                </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <FormControl>
                                         <FormLabel id="demo-radio-buttons-group-label">Hotel Category</FormLabel>
@@ -324,6 +363,16 @@ export default function FormDialog() {
                                         <FormControlLabel control={<Checkbox name='weakend' />} label="Weakend" />
                                     </FormGroup>
                                 </Grid>
+                                <Box mt={2} className="px-1">
+                                    <input name='hotelImage' type="file" accept="image/*" ref={imageRef} hidden onChange={handleImageChange} />
+                                    <div onClick={() => imageRef.current.click()} className='bg-[#F1EFF2] flex w-20 h-20 justify-center items-center border-[1px] border-slate-300 cursor-pointer'>
+                                        {hotelImage ? (
+                                            <img src={hotelImage} alt="Hotel" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                                        ) : (
+                                            <AddPhotoAlternateIcon />
+                                        )}
+                                    </div><div className='text-sm text-gray-600'>Hotel Image</div>
+                                </Box>
                             </Grid>
                             <Button
                                 type="submit"

@@ -110,6 +110,7 @@ export default function FormDialog() {
             formData.append('acPrice', form.elements.acPrice.value);
             formData.append('poolPrice', form.elements.poolPrice.value);
             formData.append('roomImage', imageRef.current.files[0]);
+            console.log(imageRef.current.files[0]);
             try {
                 const res = await axios.post('/api/hotel/addroom', formData, {
                     headers: {
@@ -145,15 +146,18 @@ export default function FormDialog() {
                 action={action}
 
             />
-            <Paper className='max-w-sm h-auto' elevation={3}>
-                <div className='flex flex-col justify-center items-center h-[250px]'>
-
-                    <Button className='w-full h-full' onClick={handleClickOpen}>
-                        <AddCircleIcon color="action" sx={{ fontSize: 70 }} />
-                    </Button>
-                    <Typography className='text-slate-800 font-roboto' gutterBottom align='center' variant="h4" component="h2">
-                        Add Room
-                    </Typography>
+            <Paper className='max-w-[180px] h-auto' elevation={3}>
+                <div className='flex flex-row justify-start items-center'>
+                    <div>
+                        <Button className='' onClick={handleClickOpen}>
+                            <AddCircleIcon color="action" sx={{ fontSize: 50 }} />
+                        </Button>
+                    </div>
+                    <div>
+                        <Typography className='text-slate-800 font-roboto' align='center' variant="h5" component="h2">
+                            Add Hotel
+                        </Typography>
+                    </div>
                 </div>
             </Paper>
             <Dialog
