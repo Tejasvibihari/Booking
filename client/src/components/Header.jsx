@@ -29,14 +29,26 @@ export default function Header() {
               <nav className="flex items-center justify-between ml-6 text-lg">
                 <Link
                   to="/"
-                  className="text-black hover:text-[#1C7C54] mx-1"
+                  className="text-black hover:text-[#1C7C54] mx-1 px-4"
                 >
                   Home
                 </Link>
+                <Link
+                  to="/"
+                  className="text-black hover:text-[#1C7C54] mx-1 px-4"
+                >
+                  About
+                </Link>
+                <Link
+                  to="/"
+                  className="text-black hover:text-[#1C7C54] mx-1 px-4"
+                >
+                  Contact
+                </Link>
               </nav>
             </div>
-            <Link className="w-full text-[#B1CF5F] md:text-center text-2xl font-semibold">
-              Booking
+            <Link className="w-full text-[#B1CF5F] md:text-center text-2xl font-semibold flex justify-center">
+              <img src="./img/Booking.png" className="w-52" alt="logo" />
             </Link>
             <div className="flex items-center justify-end w-full">
 

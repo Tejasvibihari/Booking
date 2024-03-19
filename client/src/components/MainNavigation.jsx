@@ -15,9 +15,11 @@ export default function MainNavigation() {
         <>
             <CategoryTab />
             <div className='border-[1px] max-w-5xl mx-auto mt-7 rounded-md shadow-md'>
-                <div className='grid md:grid-cols-3 gap-3 grid-cols-1 p-5'>
-                    <div>
-                        hEllo
+                <div className='grid md:grid-cols-3 gap-3 grid-cols-1 p-5 lux'>
+                    <div className=''>
+                        <h1>
+                            <span className='text-2xl font-bold'>Trending </span>
+                        </h1>
                     </div>
                     <div className='col-span-2'>
                         <div className=''>
